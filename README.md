@@ -30,3 +30,5 @@ This django app is still a work in progress. More features will be added/complet
     WEBLOG_POSTS_PER_PAGE = 10 #Number of posts that should be shown per page
 
 5. Note that if you use your own base template, you will either need to link bootstrap in your base template's head, or write your own styles for the site based on the bootstrap classes. You will as well need to link files "weblog/css/weblog.css" and "weblog/js/weblog.js" in your html head.
+
+Note: This package depends on the following python packages (besides Django and their dependencies): django-summernote
