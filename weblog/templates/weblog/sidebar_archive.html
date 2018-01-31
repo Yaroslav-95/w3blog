@@ -1,0 +1,13 @@
+{% load i18n %}
+<h3>{% trans 'Archive' context 'Blog archive' %}</h3>
+<ul class='archive-list'>
+{% for a_year in archive %}
+<li><a class="node-toggle" node-target="{{ a_year.0 }}-list" node-state="closed" href="javascript:void(0)" onclick="toggleNode(this);">+</a> <a href="{% url 'weblog:ArchiveIndex' year=a_year.0 %}">{{ a_year.0 }}</a>
+    <ul id="{{ a_year.0 }}-list" class='archive-child-list'>
+        {% for a_month in a_year.1 %}
+        <li><a href="{% url 'weblog:ArchiveIndex' year=a_year.0 month=a_month.0 %}">{{ a_month.1 }}</a></li>
+        {% endfor %}
+    </ul>
+</li>
+{% endfor %}
+</ul>

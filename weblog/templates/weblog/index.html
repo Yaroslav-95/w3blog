@@ -1,0 +1,78 @@
+{% extends 'weblog/weblog.html' %}
+{% load i18n %}
+{% block title_block %}
+{% if category %}
+{% if category == 'misc' %}
+{% trans 'Uncategorized' context 'Posts without category' %}
+{% else %}
+{{ category.name }}
+{% endif %}
+{% else %}
+{{ blog_title }}
+{% endif %}
+{% endblock %}
+{% block blog_content_block %}
+{% if category %}
+{% if category == 'misc' %}
+<h1>{% trans 'Uncategorized posts' context 'Uncategorized page title' %}</h1>
+{% else %}
+<h1>{% blocktrans with category_name=category.name context 'Posts in category' %}Posts in {{ category_name }}{% endblocktrans %}</h1>
+{% endif %}
+{% else %}
+<h1>{{ blog_title }}</h1>
+{% endif %}
+        {% if posts %}
+        {% for post in posts %}
+        <div class="container-fluid blogpost">
+            <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
+            <p class="publish-info">{% blocktrans with publish_date=post.publish_date %}Published on {{ publish_date }}{% endblocktrans %}{% if post.author %}{% blocktrans with author=post.author context 'Written by (Author)' %}, by {{ author }}{% endblocktrans %}{% endif %}</p>
+            <hr>
+            {% if post.preview_image %}<img class="img-responsive preview-img" src="{{ post.preview_image.url }}">{% endif %}
+            {{ post.preview_text|safe }}
+            <hr>
+            <div class="text-right">
+                <a href="{{ post.url }}">{% trans 'Read more...' %}</a>
+            </div>
+        </div>
+        {% endfor %}
+        {% if last_page > 1 %}
+        <ul class="pagination">
+            {% if current_page != 1 %}
+            <li title="{% trans 'First' context 'Page' %}"><a href="{% if category %}{% if category == 'misc' %}{% url 'weblog:CategoryIndex' category_slug='misc' %}{% else %}{% url 'weblog:CategoryIndex' category_slug=category.slug %}{% endif %}{% else %}{% url 'weblog:Index' %}{% endif %}">&laquo;</a></li>
+            <li title="{% trans 'Previous' context 'Page' %}"><a href="{% if category %}{% if category == 'misc' %}{% url 'weblog:CategoryIndex' category_slug='misc' %}?page={{ current_page|add:'-1' }}{% else %}{% url 'weblog:CategoryIndex' category_slug=category.slug %}?page={{ current_page|add:'-1' }}{% endif %}{% else %}{% url 'weblog:Index' %}?page={{ current_page|add:'-1' }}{% endif %}">&larr;</a></li>
+            {% if current_page == last_page and current_page|add:'-4' >= 1 %}
+            <li><a href="{% if category %}{% if category == 'misc' %}{% url 'weblog:CategoryIndex' category_slug='misc' %}?page={{ current_page|add:'-4' }}{% else %}{% url 'weblog:CategoryIndex' category_slug=category.slug %}?page={{ current_page|add:'-4' }}{% endif %}{% else %}{% url 'weblog:Index' %}?page={{ current_page|add:'-4' }}{% endif %}">{{ current_page|add:'-4' }}</a></li>
+            {% endif %}
+            {% if current_page|add:'1' >= last_page and current_page|add:'-3' >= 1 %}
+            <li><a href="{% if category %}{% if category == 'misc' %}{% url 'weblog:CategoryIndex' category_slug='misc' %}?page={{ current_page|add:'-3' }}{% else %}{% url 'weblog:CategoryIndex' category_slug=category.slug %}?page={{ current_page|add:'-3' }}{% endif %}{% else %}{% url 'weblog:Index' %}?page={{ current_page|add:'-3' }}{% endif %}">{{ current_page|add:'-3' }}</a></li>
+            {% endif %}
+            {% if current_page|add:'-2' >= 1 %}
+            <li><a href="{% if category %}{% if category == 'misc' %}{% url 'weblog:CategoryIndex' category_slug='misc' %}?page={{ current_page|add:'-2' }}{% else %}{% url 'weblog:CategoryIndex' category_slug=category.slug %}?page={{ current_page|add:'-2' }}{% endif %}{% else %}{% url 'weblog:Index' %}?page={{ current_page|add:'-2' }}{% endif %}">{{ current_page|add:'-2' }}</a></li>
+            {% endif %}
+            {% if current_page|add:'-1' >= 1 %}
+            <li><a href="{% if category %}{% if category == 'misc' %}{% url 'weblog:CategoryIndex' category_slug='misc' %}?page={{ current_page|add:'-1' }}{% else %}{% url 'weblog:CategoryIndex' category_slug=category.slug %}?page={{ current_page|add:'-1' }}{% endif %}{% else %}{% url 'weblog:Index' %}?page={{ current_page|add:'-1' }}{% endif %}">{{ current_page|add:'-1' }}</a></li>
+            {% endif %}
+            {% endif %}
+            <li class="active"><a href="#">{{ current_page }}</a></li>
+            {% if current_page != last_page %}
+            {% if current_page|add:'1' <= last_page %}
+            <li><a href="{% if category %}{% if category == 'misc' %}{% url 'weblog:CategoryIndex' category_slug='misc' %}?page={{ current_page|add:'1' }}{% else %}{% url 'weblog:CategoryIndex' category_slug=category.slug %}?page={{ current_page|add:'1' }}{% endif %}{% else %}{% url 'weblog:Index' %}?page={{ current_page|add:'1' }}{% endif %}">{{ current_page|add:'1' }}</a></li>
+            {% endif %}
+            {% if current_page|add:'2' <= last_page %}
+            <li><a href="{% if category %}{% if category == 'misc' %}{% url 'weblog:CategoryIndex' category_slug='misc' %}?page={{ current_page|add:'2' }}{% else %}{% url 'weblog:CategoryIndex' category_slug=category.slug %}?page={{ current_page|add:'2' }}{% endif %}{% else %}{% url 'weblog:Index' %}?page={{ current_page|add:'2' }}{% endif %}">{{ current_page|add:'2' }}</a></li>
+            {% endif %}
+            {% if current_page|add:'-1' <= 1 and current_page|add:'3' <= last_page %}
+            <li><a href="{% if category %}{% if category == 'misc' %}{% url 'weblog:CategoryIndex' category_slug='misc' %}?page={{ current_page|add:'3' }}{% else %}{% url 'weblog:CategoryIndex' category_slug=category.slug %}?page={{ current_page|add:'3' }}{% endif %}{% else %}{% url 'weblog:Index' %}?page={{ current_page|add:'3' }}{% endif %}">{{ current_page|add:'3' }}</a></li>
+            {% endif %}
+            {% if current_page == 1 and current_page|add:'4' <= last_page %}
+            <li><a href="{% if category %}{% if category == 'misc' %}{% url 'weblog:CategoryIndex' category_slug='misc' %}?page={{ current_page|add:'4' }}{% else %}{% url 'weblog:CategoryIndex' category_slug=category.slug %}?page={{ current_page|add:'4' }}{% endif %}{% else %}{% url 'weblog:Index' %}?page={{ current_page|add:'4' }}{% endif %}">{{ current_page|add:'4' }}</a></li>
+            {% endif %}
+            <li title="{% trans 'Next' context 'Page' %}"><a href="{% if category %}{% if category == 'misc' %}{% url 'weblog:CategoryIndex' category_slug='misc' %}?page={{ current_page|add:'1' }}{% else %}{% url 'weblog:CategoryIndex' category_slug=category.slug %}?page={{ current_page|add:'1' }}{% endif %}{% else %}{% url 'weblog:Index' %}?page={{ current_page|add:'1' }}{% endif %}">&rarr;</a></li>
+            <li title="{% trans 'Last' context 'Page' %}"><a href="{% if category %}{% if category == 'misc' %}{% url 'weblog:CategoryIndex' category_slug='misc' %}?page={{ last_page }}{% else %}{% url 'weblog:CategoryIndex' category_slug=category.slug %}?page={{ last_page }}{% endif %}{% else %}{% url 'weblog:Index' %}?page={{ last_page }}{% endif %}">&raquo;</a></li>
+            {% endif %}
+        </ul>
+        {% endif %}
+        {% else %}
+        <div class="text-center"><h2>{% trans 'Nothing has been posted yet.' %}</h2></div>
+        {% endif %}
+{% endblock %}

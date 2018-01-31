@@ -1,0 +1,67 @@
+{% extends 'weblog/weblog.html' %}
+{% load i18n %}
+{% block title_block %}{% if post_translation %}{{ post_translation.title }}{% else %}{{ post.title }}{% endif %}{% endblock %}
+{% block blog_content_block %}
+<div class="container-fluid blogpost">
+    <h2>{% if post_translation %}{{ post_translation.title }}{% else %}{{ post.title }}{% endif %}</h2>
+    <p class="publish-info">{% blocktrans with publish_date=post.publish_date %}Published on {{ publish_date }}{% endblocktrans %}{% if post_author %}{% blocktrans with author=post_author context 'Written by (Author)' %}, by {{ author }}{% endblocktrans %}{% endif %}</p>
+    <hr>
+    {% if post_translation %}
+    {{ post_translation.content|safe }}
+    {% else %}
+    {{ post.content|safe }}
+    {% endif %}
+    {% if post_categories %}
+    <hr>
+    <p>{% trans 'Categories' context 'Post categories' %}: 
+        {% for post_category in post_categories %}
+        <a class="label label-info" href="{% url 'weblog:CategoryIndex' category_slug=post_category.slug %}">{{ post_category.name }}</a>
+        {% endfor %}
+    </p>{% endif %}
+    {% if enable_comments %}
+    <hr id="#comment-section">
+    {% if user.is_authenticated or allow_anon_comments %}
+    <h3>{% trans 'Leave a comment' %}</h3>
+    <form id="comment_form" method="POST" action="{{ post.get_absolute_url }}#comment-section">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ comment_form }}
+        </div>
+        <div class="form-group text-right">
+            <button class="btn btn-primary" type="submit" value="Submit">{% trans 'Submit comment' %}</button>
+        </div>
+    </form>
+    {% else %}
+    <h4>{% trans 'To leave a comment you need to sign in' %}</h4>
+    {% endif %}
+    {% if comments %}
+    {% if comment_submission %}
+    {% if comment_submission_error %}
+    <div class="alert alert-danger alert-dismissable">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        {{ comment_submission_error }}
+    </div>
+    {% else %}
+    <div class="alert alert-success alert-dismissable">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        {% trans 'Comment submited successfully' %}
+    </div>
+    {% endif %}
+    {% endif %}
+    {% for comment in comments %}
+    <div class="media">
+        <div class="media-body">
+            <h4 class="media-heading">{% if comment.author %}{{ comment.author.get_username }}{% else %}{% trans 'Anonymous' context 'Unauthenticated comment poster' %}{% endif %}</h4>
+            <p>{{ comment.content }}</p>
+        </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <div class="text-center">
+        <br>
+        <h3>{% trans 'Nobody has left a comment on this post yet' %}</h3>
+    </div>
+    {% endif %}
+    {% endif %}
+</div>
+{% endblock %}

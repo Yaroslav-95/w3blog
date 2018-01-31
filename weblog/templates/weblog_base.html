@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Simple blog - {% block title_block %} Home {% endblock %}</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{% static '/weblog/css/weblog.css' %}">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" defer></script>
+        <script src="{% static '/weblog/js/weblog.js' %}" defer></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" defer></script>
+    </head>
+    <body>
+        <nav class="navbar navbar-inverse">
+            <div class="container nav-container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="{% url 'weblog:Index' %}">{{ blog_title }}</a>
+                </div>
+            </div>
+        </nav>
+        <div class="container">
+            {% block content_block %}
+            {% block blog_block %}
+            {% endblock %}
+            {% endblock %}
+        </div>
+    </body>
+</html>

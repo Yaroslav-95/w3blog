@@ -1,0 +1,274 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-01-31 08:00+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
+"%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: weblog/models.py:8 weblog/models.py:23
+msgctxt "Noun, not personal name"
+msgid "Name"
+msgstr "Название"
+
+#: weblog/models.py:9 weblog/models.py:45
+msgid "Slug (URL)"
+msgstr ""
+
+#: weblog/models.py:10
+msgid "Parent category"
+msgstr "Корневая категория"
+
+#: weblog/models.py:19 weblog/models.py:25
+msgctxt "Post category"
+msgid "Category"
+msgstr "Категория"
+
+#: weblog/models.py:20 weblog/models.py:46 weblog/templates/weblog/post.html:16
+#: weblog/templates/weblog/sidebar_categories.html:3
+msgctxt "Post categories"
+msgid "Categories"
+msgstr "Категории"
+
+#: weblog/models.py:24 weblog/models.py:67
+msgid "Language (ISO)"
+msgstr "Язык (В стандарте ISO)"
+
+#: weblog/models.py:34
+msgid "Category name translation"
+msgstr "Перевод названия категории"
+
+#: weblog/models.py:35
+msgid "Category name translations"
+msgstr "Переводы названия категории"
+
+#: weblog/models.py:39 weblog/models.py:78
+msgid "Author"
+msgstr "Автор"
+
+#: weblog/models.py:40 weblog/models.py:68
+msgctxt "As in name"
+msgid "Title"
+msgstr "Название"
+
+#: weblog/models.py:41 weblog/models.py:69 weblog/models.py:80
+msgctxt "Of post, comment, article, etc."
+msgid "Content"
+msgstr "Содержание"
+
+#: weblog/models.py:42 weblog/models.py:70
+msgid "Preview image"
+msgstr "Картинка предпросмотра"
+
+#: weblog/models.py:43 weblog/models.py:71
+msgid "Preview Text"
+msgstr "Текст предпросмотра"
+
+#: weblog/models.py:44
+msgid "Original language (ISO)"
+msgstr "Язык оригинала (в стандарте ISO)"
+
+#: weblog/models.py:47
+msgctxt "Make post viewable"
+msgid "Published"
+msgstr "Опубликовать"
+
+#: weblog/models.py:48
+msgid "Publish date"
+msgstr "Дата публикации"
+
+#: weblog/models.py:62
+msgid "Blog Post"
+msgstr "Запись блога"
+
+#: weblog/models.py:63
+msgid "Blog Posts"
+msgstr "Записи блога"
+
+#: weblog/models.py:66 weblog/models.py:79
+msgctxt "Noun, as in blog post"
+msgid "Post"
+msgstr "Запись"
+
+#: weblog/models.py:74
+msgid "Translation"
+msgstr "Перевод"
+
+#: weblog/models.py:75
+msgid "Translations"
+msgstr "Переводы"
+
+#: weblog/models.py:83
+msgctxt "Noun"
+msgid "Comment"
+msgstr "Комментарий"
+
+#: weblog/models.py:84
+msgctxt "Noun"
+msgid "Comments"
+msgstr "Комментарии"
+
+#: weblog/templates/weblog/index.html:6 weblog/templatetags/weblog_extras.py:43
+#: weblog/views.py:75 weblog/views.py:150
+msgctxt "Posts without category"
+msgid "Uncategorized"
+msgstr "Без категории"
+
+#: weblog/templates/weblog/index.html:17
+msgctxt "Uncategorized page title"
+msgid "Uncategorized posts"
+msgstr "Записи без категории"
+
+#: weblog/templates/weblog/index.html:19
+#, python-format
+msgctxt "Posts in category"
+msgid "Posts in %(category_name)s"
+msgstr "Записи в %(category_name)s"
+
+#: weblog/templates/weblog/index.html:28 weblog/templates/weblog/post.html:7
+#, python-format
+msgid "Published on %(publish_date)s"
+msgstr "Опубликовано %(publish_date)s"
+
+#: weblog/templates/weblog/index.html:28 weblog/templates/weblog/post.html:7
+#, python-format
+msgctxt "Written by (Author)"
+msgid ", by %(author)s"
+msgstr ". %(author)s"
+
+#: weblog/templates/weblog/index.html:34
+msgid "Read more..."
+msgstr "Читать далее..."
+
+#: weblog/templates/weblog/index.html:41
+msgctxt "Page"
+msgid "First"
+msgstr "Первая"
+
+#: weblog/templates/weblog/index.html:42
+msgctxt "Page"
+msgid "Previous"
+msgstr "Предыдущая"
+
+#: weblog/templates/weblog/index.html:70
+msgctxt "Page"
+msgid "Next"
+msgstr "Следующая"
+
+#: weblog/templates/weblog/index.html:71
+msgctxt "Page"
+msgid "Last"
+msgstr "Последняя"
+
+#: weblog/templates/weblog/index.html:76
+msgid "Nothing has been posted yet."
+msgstr "Нет записи на данный момент."
+
+#: weblog/templates/weblog/post.html:24
+msgid "Leave a comment"
+msgstr "Оставьте комментарий"
+
+#: weblog/templates/weblog/post.html:31
+msgid "Submit comment"
+msgstr "Отправить комметарий"
+
+#: weblog/templates/weblog/post.html:35
+msgid "To leave a comment you need to sign in"
+msgstr "Для того чтобы оставить комментарий, зайдите в свою учетную запись"
+
+#: weblog/templates/weblog/post.html:47
+msgid "Comment submited successfully"
+msgstr "Ваш комментарий был успешно отправлен"
+
+#: weblog/templates/weblog/post.html:54
+msgctxt "Unauthenticated comment poster"
+msgid "Anonymous"
+msgstr "Анонимный"
+
+#: weblog/templates/weblog/post.html:62
+msgid "Nobody has left a comment on this post yet"
+msgstr "У этой записи нет комментарии."
+
+#: weblog/templates/weblog/sidebar_archive.html:2
+msgctxt "Blog archive"
+msgid "Archive"
+msgstr "Архив"
+
+#: weblog/templatetags/weblog_extras.py:12
+msgid "January"
+msgstr ""
+
+#: weblog/templatetags/weblog_extras.py:13
+msgid "February"
+msgstr ""
+
+#: weblog/templatetags/weblog_extras.py:14
+msgid "March"
+msgstr ""
+
+#: weblog/templatetags/weblog_extras.py:15
+msgid "April"
+msgstr ""
+
+#: weblog/templatetags/weblog_extras.py:16
+msgid "May"
+msgstr ""
+
+#: weblog/templatetags/weblog_extras.py:17
+msgid "June"
+msgstr ""
+
+#: weblog/templatetags/weblog_extras.py:18
+msgid "July"
+msgstr ""
+
+#: weblog/templatetags/weblog_extras.py:19
+msgid "August"
+msgstr ""
+
+#: weblog/templatetags/weblog_extras.py:20
+msgid "September"
+msgstr ""
+
+#: weblog/templatetags/weblog_extras.py:21
+msgid "October"
+msgstr ""
+
+#: weblog/templatetags/weblog_extras.py:22
+msgid "November"
+msgstr ""
+
+#: weblog/templatetags/weblog_extras.py:23
+msgid "December"
+msgstr ""
+
+#: weblog/views.py:171
+msgid "You need to sign in to submit a comment"
+msgstr "Для того чтобы оставить комментарий, зайдите в свою учетную запись"
+
+#: weblog/views.py:173
+msgid "Error submitting comment: Invalid data"
+msgstr "Ошибка: неправильный формат данных"
+
+#~ msgid "English"
+#~ msgstr "Английский"
+
+#~ msgid "Spanish"
+#~ msgstr "Испанский"
+
+#~ msgid "Russian"
+#~ msgstr "Русский"

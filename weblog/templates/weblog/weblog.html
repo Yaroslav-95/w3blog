@@ -1,0 +1,42 @@
+{% extends base_template %}
+{% load i18n %}
+{% load weblog_extras %}
+{% block title_block %}{% endblock %}
+{% block blog_block %}
+<ol class="breadcrumb">
+    {% if breadcrumbs %}
+    <li><a href="{% url 'weblog:Index' %}">{{ blog_title }}</a></li>
+    {% for crumb in breadcrumbs %}
+    {% if forloop.last %}
+    <li class="active">{{ crumb.name }}</li>
+    {% else %}<li><a href="{{ crumb.url }}">{{ crumb.name }}</a></li>{% endif %}
+    {% endfor %}
+    {% else %}
+    <li class="active"><a href="{% url 'weblog:Index' %}">{{ blog_title }}</a></li>   
+    {% endif %}
+</ol>
+<div class="row">
+    <div class="{% if show_sidebar %}col-sm-9{% else %}container-fluid{% endif %}">
+        {% block blog_content_block %}
+        {% endblock %}
+    </div>
+    {% if show_sidebar %}
+    <div class="col-sm-3 weblog-sidebar">
+        {% if show_categories %}
+        {% if category %}
+        {% if category == 'misc' %}
+        {% get_sidebar_categories category %}
+        {% else %}
+        {% get_sidebar_categories category.slug %}
+        {% endif %}
+        {% else %}
+        {% get_sidebar_categories %}
+        {% endif %}
+        {% endif %}
+        {% if show_archive %}
+        {% get_sidebar_archive %}
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

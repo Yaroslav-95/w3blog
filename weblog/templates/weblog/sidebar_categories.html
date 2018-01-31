@@ -1,0 +1,11 @@
+{% load i18n %}
+{% if categories %}
+<h3>{% trans 'Categories' context 'Post categories' %}</h3>
+<div class="list-group weblog-categories">
+    {% for category in categories %}
+    <a href="{% url 'weblog:CategoryIndex' category_slug=category.slug %}" class="list-group-item{% if category.slug == selected_cat_slug %} active{% endif %}">
+        {{ category.name }}
+    </a>
+    {% endfor %}
+</div>
+{% endif %}
