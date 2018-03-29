@@ -5,7 +5,7 @@ SETTINGS = {
     'allow_anon_comments': True,
     'multilingual': True,
     'blog_title': 'Django-Weblog',
-    'base_template': 'base.html',
+    'base_template': 'weblog_base.html',
     'show_author': True,
     'use_authors_username': True,
     'show_sidebar': True,

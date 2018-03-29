@@ -7,11 +7,11 @@ from django.utils.translation import ugettext_lazy as _, pgettext_lazy
 class Category(models.Model):
     name = models.CharField(max_length=250, verbose_name=pgettext_lazy('Noun, not personal name', 'Name'), blank=False, unique=True)
     slug = models.SlugField(max_length=60, verbose_name=_('Slug (URL)'), db_index=True, unique=True)
-    parent_category = models.ForeignKey('self', verbose_name=_('Parent category'), null=True, blank=True)
+    parent_category = models.ForeignKey('self', verbose_name=_('Parent category'), on_delete=models.PROTECT, null=True, blank=True)
 
     def get_absolute_url(self):
         return reverse('weblog:CategoryIndex', kwargs={'category_slug': self.slug})
-    
+
     def __str__(self):
         return self.name
 
@@ -22,7 +22,7 @@ class Category(models.Model):
 class CategoryTranslation(models.Model):
     name = models.CharField(max_length=250, verbose_name=pgettext_lazy('Noun, not personal name', 'Name'), blank=False)
     language = models.CharField(max_length=5, verbose_name=_('Language (ISO)'), blank=False)
-    category = models.ForeignKey(Category, verbose_name = pgettext_lazy('Post category', 'Category'), blank=False)
+    category = models.ForeignKey(Category, verbose_name = pgettext_lazy('Post category', 'Category'), on_delete=models.CASCADE, blank=False)
 
     def __str__(self):
         return self.name
@@ -36,7 +36,7 @@ class CategoryTranslation(models.Model):
 
 
 class BlogPost(models.Model):
-    author = models.ForeignKey(User, verbose_name=_('Author'))
+    author = models.ForeignKey(User, verbose_name=_('Author'), on_delete=models.PROTECT)
     title = models.CharField(max_length=100, verbose_name=pgettext_lazy('As in name', 'Title'), blank=False)
     content = models.TextField(verbose_name=pgettext_lazy('Of post, comment, article, etc.', 'Content'), blank=False)
     preview_image = models.ImageField(upload_to='weblog/preview_images/%Y/%m/%d/', blank=True, verbose_name=_('Preview image'))
@@ -63,7 +63,7 @@ class BlogPost(models.Model):
         verbose_name_plural = _('Blog Posts')
 
 class Translation(models.Model):
-    post = models.ForeignKey(BlogPost, verbose_name=pgettext_lazy('Noun, as in blog post', 'Post'))
+    post = models.ForeignKey(BlogPost, verbose_name=pgettext_lazy('Noun, as in blog post', 'Post'), on_delete=models.CASCADE)
     language = models.CharField(max_length=5, verbose_name=_('Language (ISO)'), blank=False)
     title = models.CharField(max_length=100, verbose_name=pgettext_lazy('As in name', 'Title'), blank=False)
     content = models.TextField(verbose_name=pgettext_lazy('Of post, comment, article, etc.', 'Content'), blank=False)
@@ -75,8 +75,8 @@ class Translation(models.Model):
         verbose_name_plural = _('Translations')
 
 class PostComment(models.Model):
-    author = models.ForeignKey(User, verbose_name=_('Author'), null=True, blank=True)
-    post = models.ForeignKey(BlogPost, verbose_name=pgettext_lazy('Noun, as in blog post', 'Post'))
+    author = models.ForeignKey(User, verbose_name=_('Author'), on_delete=models.SET_NULL, null=True, blank=True)
+    post = models.ForeignKey(BlogPost, verbose_name=pgettext_lazy('Noun, as in blog post', 'Post'), on_delete=models.CASCADE)
     content = models.TextField(verbose_name=pgettext_lazy('Of post, comment, article, etc.', 'Content'), blank=False)
 
     class Meta:
