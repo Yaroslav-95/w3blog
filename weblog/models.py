@@ -11,7 +11,7 @@ class Category(models.Model):
 
     def get_absolute_url(self):
         return reverse('weblog:CategoryIndex', kwargs={'category_slug': self.slug})
-    
+
     def __str__(self):
         return self.name
 
@@ -44,6 +44,8 @@ class BlogPost(models.Model):
     original_language = models.CharField(max_length=5, verbose_name=_('Original language (ISO)'), blank=True)
     slug = models.SlugField(max_length=100, verbose_name=_('Slug (URL)'), db_index=True, unique=True)
     categories = models.ManyToManyField(Category, verbose_name=pgettext_lazy('Post categories', 'Categories'), blank=True)
+    pinned = models.BooleanField(verbose_name=_('Pin blog post'), default=False)
+    pin_priority = models.IntegerField(verbose_name=_('Pinned post priority (if pinned)'), default=0)
     published = models.BooleanField(verbose_name=pgettext_lazy('Make post viewable', 'Published'))
     publish_date = models.DateTimeField(verbose_name=_('Publish date'))
 

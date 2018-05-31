@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-31 08:00+0300\n"
+"POT-Creation-Date: 2018-05-31 14:31+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,247 +20,278 @@ msgstr ""
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: weblog/models.py:8 weblog/models.py:23
+#: models.py:8 models.py:23
 msgctxt "Noun, not personal name"
 msgid "Name"
 msgstr "Название"
 
-#: weblog/models.py:9 weblog/models.py:45
+#: models.py:9 models.py:45
 msgid "Slug (URL)"
 msgstr ""
 
-#: weblog/models.py:10
+#: models.py:10
 msgid "Parent category"
 msgstr "Корневая категория"
 
-#: weblog/models.py:19 weblog/models.py:25
+#: models.py:19 models.py:25
 msgctxt "Post category"
 msgid "Category"
 msgstr "Категория"
 
-#: weblog/models.py:20 weblog/models.py:46 weblog/templates/weblog/post.html:16
-#: weblog/templates/weblog/sidebar_categories.html:3
+#: models.py:20 models.py:46 templates/weblog/post.html:16
+#: templates/weblog/sidebar_categories.html:3
 msgctxt "Post categories"
 msgid "Categories"
 msgstr "Категории"
 
-#: weblog/models.py:24 weblog/models.py:67
+#: models.py:24 models.py:69
 msgid "Language (ISO)"
 msgstr "Язык (В стандарте ISO)"
 
-#: weblog/models.py:34
+#: models.py:34
 msgid "Category name translation"
 msgstr "Перевод названия категории"
 
-#: weblog/models.py:35
+#: models.py:35
 msgid "Category name translations"
 msgstr "Переводы названия категории"
 
-#: weblog/models.py:39 weblog/models.py:78
+#: models.py:39 models.py:80
 msgid "Author"
 msgstr "Автор"
 
-#: weblog/models.py:40 weblog/models.py:68
+#: models.py:40 models.py:70
 msgctxt "As in name"
 msgid "Title"
 msgstr "Название"
 
-#: weblog/models.py:41 weblog/models.py:69 weblog/models.py:80
+#: models.py:41 models.py:71 models.py:82
 msgctxt "Of post, comment, article, etc."
 msgid "Content"
 msgstr "Содержание"
 
-#: weblog/models.py:42 weblog/models.py:70
+#: models.py:42 models.py:72
 msgid "Preview image"
 msgstr "Картинка предпросмотра"
 
-#: weblog/models.py:43 weblog/models.py:71
+#: models.py:43 models.py:73
 msgid "Preview Text"
 msgstr "Текст предпросмотра"
 
-#: weblog/models.py:44
+#: models.py:44
 msgid "Original language (ISO)"
 msgstr "Язык оригинала (в стандарте ISO)"
 
-#: weblog/models.py:47
+#: models.py:47
+msgid "Pin blog post"
+msgstr "Прикрепить запись блога"
+
+#: models.py:48
+msgid "Pinned post priority (if pinned)"
+msgstr "Приоритет прикрепленной записи"
+
+#: models.py:49
 msgctxt "Make post viewable"
 msgid "Published"
 msgstr "Опубликовать"
 
-#: weblog/models.py:48
+#: models.py:50
 msgid "Publish date"
 msgstr "Дата публикации"
 
-#: weblog/models.py:62
+#: models.py:64
 msgid "Blog Post"
 msgstr "Запись блога"
 
-#: weblog/models.py:63
+#: models.py:65
 msgid "Blog Posts"
 msgstr "Записи блога"
 
-#: weblog/models.py:66 weblog/models.py:79
+#: models.py:68 models.py:81
 msgctxt "Noun, as in blog post"
 msgid "Post"
 msgstr "Запись"
 
-#: weblog/models.py:74
+#: models.py:76
 msgid "Translation"
 msgstr "Перевод"
 
-#: weblog/models.py:75
+#: models.py:77
 msgid "Translations"
 msgstr "Переводы"
 
-#: weblog/models.py:83
+#: models.py:85
 msgctxt "Noun"
 msgid "Comment"
 msgstr "Комментарий"
 
-#: weblog/models.py:84
+#: models.py:86
 msgctxt "Noun"
 msgid "Comments"
 msgstr "Комментарии"
 
-#: weblog/templates/weblog/index.html:6 weblog/templatetags/weblog_extras.py:43
-#: weblog/views.py:75 weblog/views.py:150
+#: templates/weblog/index.html:6 templatetags/weblog_extras.py:43 views.py:94
+#: views.py:178
 msgctxt "Posts without category"
 msgid "Uncategorized"
 msgstr "Без категории"
 
-#: weblog/templates/weblog/index.html:17
+#: templates/weblog/index.html:11 templates/weblog/index.html:28
+msgctxt "Home page"
+msgid "Home"
+msgstr "Главная"
+
+#: templates/weblog/index.html:17
 msgctxt "Uncategorized page title"
 msgid "Uncategorized posts"
 msgstr "Записи без категории"
 
-#: weblog/templates/weblog/index.html:19
+#: templates/weblog/index.html:19
 #, python-format
 msgctxt "Posts in category"
 msgid "Posts in %(category_name)s"
 msgstr "Записи в %(category_name)s"
 
-#: weblog/templates/weblog/index.html:28 weblog/templates/weblog/post.html:7
+#: templates/weblog/index.html:23
+#, python-format
+msgctxt "Posts from archive (year/month,year)"
+msgid "Posts from %(month)s, %(year)s"
+msgstr "Архив: %(month)s, %(year)s"
+
+#: templates/weblog/index.html:25
+#, python-format
+msgctxt "Posts from archive (year/month,year)"
+msgid "Posts from %(year)s"
+msgstr "Архив: %(year)s"
+
+#: templates/weblog/index.html:34
+msgid "Important post"
+msgstr "Прикрепленная запись"
+
+#: templates/weblog/index.html:36 templates/weblog/index.html:51
+#: templates/weblog/post.html:7
 #, python-format
 msgid "Published on %(publish_date)s"
 msgstr "Опубликовано %(publish_date)s"
 
-#: weblog/templates/weblog/index.html:28 weblog/templates/weblog/post.html:7
+#: templates/weblog/index.html:36 templates/weblog/index.html:51
+#: templates/weblog/post.html:7
 #, python-format
 msgctxt "Written by (Author)"
 msgid ", by %(author)s"
 msgstr ". %(author)s"
 
-#: weblog/templates/weblog/index.html:34
+#: templates/weblog/index.html:42 templates/weblog/index.html:57
 msgid "Read more..."
 msgstr "Читать далее..."
 
-#: weblog/templates/weblog/index.html:41
+#: templates/weblog/index.html:64
 msgctxt "Page"
 msgid "First"
 msgstr "Первая"
 
-#: weblog/templates/weblog/index.html:42
+#: templates/weblog/index.html:65
 msgctxt "Page"
 msgid "Previous"
 msgstr "Предыдущая"
 
-#: weblog/templates/weblog/index.html:70
+#: templates/weblog/index.html:93
 msgctxt "Page"
 msgid "Next"
 msgstr "Следующая"
 
-#: weblog/templates/weblog/index.html:71
+#: templates/weblog/index.html:94
 msgctxt "Page"
 msgid "Last"
 msgstr "Последняя"
 
-#: weblog/templates/weblog/index.html:76
+#: templates/weblog/index.html:100
 msgid "Nothing has been posted yet."
 msgstr "Нет записи на данный момент."
 
-#: weblog/templates/weblog/post.html:24
+#: templates/weblog/post.html:24
 msgid "Leave a comment"
 msgstr "Оставьте комментарий"
 
-#: weblog/templates/weblog/post.html:31
+#: templates/weblog/post.html:31
 msgid "Submit comment"
 msgstr "Отправить комметарий"
 
-#: weblog/templates/weblog/post.html:35
+#: templates/weblog/post.html:35
 msgid "To leave a comment you need to sign in"
 msgstr "Для того чтобы оставить комментарий, зайдите в свою учетную запись"
 
-#: weblog/templates/weblog/post.html:47
+#: templates/weblog/post.html:47
 msgid "Comment submited successfully"
 msgstr "Ваш комментарий был успешно отправлен"
 
-#: weblog/templates/weblog/post.html:54
+#: templates/weblog/post.html:54
 msgctxt "Unauthenticated comment poster"
 msgid "Anonymous"
 msgstr "Анонимный"
 
-#: weblog/templates/weblog/post.html:62
+#: templates/weblog/post.html:62
 msgid "Nobody has left a comment on this post yet"
 msgstr "У этой записи нет комментарии."
 
-#: weblog/templates/weblog/sidebar_archive.html:2
+#: templates/weblog/sidebar_archive.html:2
 msgctxt "Blog archive"
 msgid "Archive"
 msgstr "Архив"
 
-#: weblog/templatetags/weblog_extras.py:12
+#: templatetags/weblog_extras.py:12
 msgid "January"
 msgstr ""
 
-#: weblog/templatetags/weblog_extras.py:13
+#: templatetags/weblog_extras.py:13
 msgid "February"
 msgstr ""
 
-#: weblog/templatetags/weblog_extras.py:14
+#: templatetags/weblog_extras.py:14
 msgid "March"
 msgstr ""
 
-#: weblog/templatetags/weblog_extras.py:15
+#: templatetags/weblog_extras.py:15
 msgid "April"
 msgstr ""
 
-#: weblog/templatetags/weblog_extras.py:16
+#: templatetags/weblog_extras.py:16
 msgid "May"
 msgstr ""
 
-#: weblog/templatetags/weblog_extras.py:17
+#: templatetags/weblog_extras.py:17
 msgid "June"
 msgstr ""
 
-#: weblog/templatetags/weblog_extras.py:18
+#: templatetags/weblog_extras.py:18
 msgid "July"
 msgstr ""
 
-#: weblog/templatetags/weblog_extras.py:19
+#: templatetags/weblog_extras.py:19
 msgid "August"
 msgstr ""
 
-#: weblog/templatetags/weblog_extras.py:20
+#: templatetags/weblog_extras.py:20
 msgid "September"
 msgstr ""
 
-#: weblog/templatetags/weblog_extras.py:21
+#: templatetags/weblog_extras.py:21
 msgid "October"
 msgstr ""
 
-#: weblog/templatetags/weblog_extras.py:22
+#: templatetags/weblog_extras.py:22
 msgid "November"
 msgstr ""
 
-#: weblog/templatetags/weblog_extras.py:23
+#: templatetags/weblog_extras.py:23
 msgid "December"
 msgstr ""
 
-#: weblog/views.py:171
+#: views.py:199
 msgid "You need to sign in to submit a comment"
 msgstr "Для того чтобы оставить комментарий, зайдите в свою учетную запись"
 
-#: weblog/views.py:173
+#: views.py:201
 msgid "Error submitting comment: Invalid data"
 msgstr "Ошибка: неправильный формат данных"
 

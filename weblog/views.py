@@ -5,10 +5,10 @@ from django.utils import translation
 from django.utils.translation import ugettext_lazy as _, pgettext_lazy
 from .apps import SETTINGS as blog_settings
 from .models import BlogPost, Translation, PostComment, Category, CategoryTranslation, PostCommentForm
+from .templatetags.weblog_extras import MONTHS
 import datetime
 
-#Why the hell didn't I just pass the variables to the context_dict in the first place??
-#Need to remove this later
+#Need to change the way this works later
 IS_MULTILINGUAL = blog_settings['multilingual']
 BASE_TEMPLATE = blog_settings['base_template']
 BLOG_TITLE = blog_settings['blog_title']
@@ -24,6 +24,8 @@ def Index(request, **kwargs):
     now = datetime.datetime.now()
     all_pages = BlogPost.objects.filter(published=True, publish_date__lte=now)
     category = None
+
+    # Check for arguments to see if it is the main page, category page, or archive
     if kwargs is not None:
         category_slug = kwargs.get('category_slug')
         year = kwargs.get('year')
@@ -37,9 +39,16 @@ def Index(request, **kwargs):
             context_dict['category'] = category
             all_pages = BlogPost.objects.filter(published=True, publish_date__lte=now, categories__slug=category_slug)
     if year:
+        context_dict['year'] = year
         all_pages = BlogPost.objects.filter(published=True, publish_date__lte=now, publish_date__year=year)
+        context_dict['breadcrumbs'] = [{'url': reverse('weblog:ArchiveIndex', kwargs={'year': year}), 'name': str(year)},]
         if month:
-            all_pages = BlogPost.objects.filter(published=True, publish_date__lte=now, publish_date__month=month)
+            context_dict['month'] = MONTHS[int(month)-1]
+            all_pages = all_pages.filter(published=True, publish_date__lte=now, publish_date__month=month)
+            context_dict['breadcrumbs'].append({'url': reverse('weblog:ArchiveIndex', kwargs={'year': year, 'month': month}), 'name': MONTHS[int(month)-1]})
+
+    # Check how many blog posts are there in total, to calculate into how many pages
+    # the index needs to be divided
     post_count = all_pages.count()
     if post_count < 1:
         return render(request, 'weblog/index.html', context_dict)
@@ -58,12 +67,22 @@ def Index(request, **kwargs):
     else:
         last_page = int(post_count/POSTS_PER_PAGE)+1
     context_dict['last_page'] = last_page
-    posts_raw = all_pages[slice_start:slice_end]
-    if category_slug:
-        posts_raw = all_pages[slice_start:slice_end]
+
+    # Check for pinned posts if it is the home page of the blog
+    # and get the pinned and necessary posts depending on the page
+    posts_raw = list(all_pages[slice_start:slice_end])
+    if category is None:
+        for pinned_post in BlogPost.objects.filter(pinned=True).order_by('-pin_priority'):
+            if pinned_post in posts_raw:
+                posts_raw.remove(pinned_post)
+            posts_raw.append(pinned_post)
+
+    # Get the language from the user agent, if there's none, use the default
     current_language = translation.get_language()
     if current_language is None:
         current_language = settings.LANGUAGE_CODE
+
+    # If it is a category page, get the category url and breadcrumbs
     if category_slug:
         if IS_MULTILINGUAL and category_slug != 'misc':
             category_translations = CategoryTranslation.objects.filter(category=category)
@@ -75,7 +94,12 @@ def Index(request, **kwargs):
             context_dict['breadcrumbs'] = [{'url': reverse('weblog:CategoryIndex', kwargs={'category_slug': category_slug}), 'name': pgettext_lazy('Posts without category', 'Uncategorized')},]
         else:
             context_dict['breadcrumbs'] = [{'url': reverse('weblog:CategoryIndex', kwargs={'category_slug': category_slug}), 'name': context_dict['category']},]
+
+    # Earlier we got just the posts from BlogPost model, now, if we are using the localization capabilities
+    # we check for the language in use and select the appropiate translation language if available
+    # otherwise default to the original blog post, or fallback language
     posts = []
+    pinned_posts = []
     for post_raw in posts_raw:
         post = {'publish_date': post_raw.publish_date, 'url': post_raw.get_absolute_url()}
         if SHOW_AUTHOR:
@@ -120,8 +144,12 @@ def Index(request, **kwargs):
                     post['preview_text'] = post_raw.preview_text
                 else:
                     post['preview_text'] = post_raw.content.split('</p>', 1)[0]+'</p>'
-        posts.append(post)
+        if post_raw.pinned:
+            pinned_posts.append(post)
+        else:
+            posts.append(post)
     context_dict['posts'] = posts
+    context_dict['pinned_posts'] = pinned_posts
     return render(request, 'weblog/index.html', context_dict)
 
 
@@ -166,7 +194,7 @@ def PostView(request, category_slug, post_slug):
                 new_comment.save()
             elif ALLOW_ANON_COMMENTS:
                 new_comment = PostComment(post=post, content=comment_content)
-                new_comment.save()    
+                new_comment.save()
             else:
                 context_dict['comment_submission_error'] = _('You need to sign in to submit a comment')
         else:
@@ -193,7 +221,7 @@ def PostView(request, category_slug, post_slug):
         if current_language[0:2] == post_translation.language[0:2]:
             context_dict['post_translation'] = post_translation
     if 'post_translation' in context_dict:
-        context_dict['breadcrumbs'].append({'url': post.get_absolute_url(), 'name': post_translation.title})    
+        context_dict['breadcrumbs'].append({'url': post.get_absolute_url(), 'name': post_translation.title})
     else:
         context_dict['breadcrumbs'].append({'url': post.get_absolute_url(), 'name': post.title})
     return render(request, 'weblog/post.html', context_dict)
@@ -204,4 +232,3 @@ def ChangeLanguage(request, language):
     if request.GET.get('next'):
         return HttpResponseRedirect(request.GET['next'])
     return HttpResponseRedirect(reverse('weblog:Index'))
-    

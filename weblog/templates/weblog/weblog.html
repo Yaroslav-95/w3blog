@@ -3,18 +3,18 @@
 {% load weblog_extras %}
 {% block title_block %}{% endblock %}
 {% block blog_block %}
-<ol class="breadcrumb">
+<ul class="breadcrumb">
     {% if breadcrumbs %}
-    <li><a href="{% url 'weblog:Index' %}">{{ blog_title }}</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'weblog:Index' %}">{{ blog_title }}</a></li>
     {% for crumb in breadcrumbs %}
     {% if forloop.last %}
-    <li class="active">{{ crumb.name }}</li>
-    {% else %}<li><a href="{{ crumb.url }}">{{ crumb.name }}</a></li>{% endif %}
+    <li class="breadcrumb-item active">{{ crumb.name }}</li>
+    {% else %}<li class="breadcrumb-item"><a href="{{ crumb.url }}">{{ crumb.name }}</a></li>{% endif %}
     {% endfor %}
     {% else %}
-    <li class="active"><a href="{% url 'weblog:Index' %}">{{ blog_title }}</a></li>   
+    <li class="breadcrumb-item active"><a href="{% url 'weblog:Index' %}">{{ blog_title }}</a></li>
     {% endif %}
-</ol>
+</ul>
 <div class="row">
     <div class="{% if show_sidebar %}col-sm-9{% else %}container-fluid{% endif %}">
         {% block blog_content_block %}

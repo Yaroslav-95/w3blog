@@ -46,6 +46,8 @@ def get_sidebar_categories(selected_cat_slug=None):
 
 @register.inclusion_tag('weblog/sidebar_archive.html')
 def get_sidebar_archive():
+    if BlogPost.objects.all().count() < 1:
+        return {}
     now = datetime.datetime.now()
     oldest_post = BlogPost.objects.filter(published=True).reverse()[0]
     first_year = oldest_post.publish_date.year
@@ -57,10 +59,11 @@ def get_sidebar_archive():
     c_year = first_year
     archive = []
     while c_year <= latest_year:
-        if BlogPost.objects.filter(publish_date__year=c_year, publish_date__lte=now, published=True).count() > 0:
+        year_posts = BlogPost.objects.filter(publish_date__year=c_year, publish_date__lte=now, published=True)
+        if year_posts.count() > 0:
             this_years_months = []
             while (c_year < latest_year or c_month <= latest_month) and c_month <= 12:
-                if BlogPost.objects.filter(publish_date__month=c_month, publish_date__lte=now, published=True).count() > 0:
+                if year_posts.filter(publish_date__month=c_month, publish_date__lte=now, published=True).count() > 0:
                     this_years_months.append((c_month, MONTHS[c_month-1]))
                 c_month+=1
             archive.append((c_year, this_years_months))
