@@ -1,5 +1,5 @@
 
-# Weblog version 0.3 #
+# Weblog version 0.2 #
 
 Weblog is a simple blog engine for Django, with some focus on multilingual capabilities. It includes all of the basic features expected of a traditional Web log (also known as blog), as well as multilingual features, i.e. translations of blog posts which are delivered automatically in the user's preferred language using the internationalization capabilities of Django, enabling the possibility of targeting people from different countries in a single blog/site.
 
@@ -31,6 +31,6 @@ This django app is still a work in progress. More features will be added/complet
         'posts_per_page': 10,
     }
 
-5. Note that if you use your own base template, you will either need to link bootstrap in your base template's head, or write your own styles for the site based on the bootstrap classes. You will as well need to link files "weblog/css/weblog.css" and "weblog/js/weblog.js" in your html head.
+5. Note that if you use your own base template, you will either need to link bootstrap (v3.2 at the moment) in your base template's head, or write your own styles for the site based on the bootstrap classes. You will as well need to link files "weblog/css/weblog.css" and "weblog/js/weblog.js" in your html head, or write your own.
 
 Note: This package depends on the following python packages (besides Django and their dependencies): django-summernote
