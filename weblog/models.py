@@ -7,7 +7,7 @@ from django.utils.translation import ugettext_lazy as _, pgettext_lazy
 class Category(models.Model):
     name = models.CharField(max_length=250, verbose_name=pgettext_lazy('Noun, not personal name', 'Name'), blank=False, unique=True)
     slug = models.SlugField(max_length=60, verbose_name=_('Slug (URL)'), db_index=True, unique=True)
-    parent_category = models.ForeignKey('self', verbose_name=_('Parent category'), on_delete=models.PROTECT, null=True, blank=True)
+    parent_category = models.ForeignKey('self', verbose_name=_('Parent category'), null=True, blank=True, default=None, on_delete=models.SET_DEFAULT)
 
     def get_absolute_url(self):
         return reverse('weblog:CategoryIndex', kwargs={'category_slug': self.slug})
@@ -22,7 +22,7 @@ class Category(models.Model):
 class CategoryTranslation(models.Model):
     name = models.CharField(max_length=250, verbose_name=pgettext_lazy('Noun, not personal name', 'Name'), blank=False)
     language = models.CharField(max_length=5, verbose_name=_('Language (ISO)'), blank=False)
-    category = models.ForeignKey(Category, verbose_name = pgettext_lazy('Post category', 'Category'), on_delete=models.CASCADE, blank=False)
+    category = models.ForeignKey(Category, verbose_name = pgettext_lazy('Post category', 'Category'), blank=False, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -77,7 +77,7 @@ class Translation(models.Model):
         verbose_name_plural = _('Translations')
 
 class PostComment(models.Model):
-    author = models.ForeignKey(User, verbose_name=_('Author'), on_delete=models.SET_NULL, null=True, blank=True)
+    author = models.ForeignKey(User, verbose_name=_('Author'), null=True, blank=True, on_delete=models.PROTECT)
     post = models.ForeignKey(BlogPost, verbose_name=pgettext_lazy('Noun, as in blog post', 'Post'), on_delete=models.CASCADE)
     content = models.TextField(verbose_name=pgettext_lazy('Of post, comment, article, etc.', 'Content'), blank=False)
 

@@ -1,5 +1,5 @@
 
-# Weblog version 0.2 #
+# Weblog version 0.3 #
 
 Weblog is a simple blog engine for Django, with some focus on multilingual capabilities. It includes all of the basic features expected of a traditional Web log (also known as blog), as well as multilingual features, i.e. translations of blog posts which are delivered automatically in the user's preferred language using the internationalization capabilities of Django, enabling the possibility of targeting people from different countries in a single blog/site.
 
