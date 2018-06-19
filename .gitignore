@@ -1,0 +1,4 @@
+dist/
+sdist/
+__pycache__/
+*.egg-info
