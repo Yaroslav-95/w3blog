@@ -1,6 +1,6 @@
 from django.contrib.syndication.views. import Feed
 from django.urls import reverse
-from weblog.models import BlogPost, Category, CategoryTranslation
+from weblog.models import BlogPost, Translation, Category, CategoryTranslation
 from weblog.apps import SETTINGS as blog_settings
 from django.utils.translation import ugettext_lazy as _, pgettext_lazy
 from django.utils import translation
@@ -56,10 +56,40 @@ class BlogFeed(Feed):
         return _('Latest blog posts on %(blog_title)s') % {'blog_title': blog_settings['blog_title']}
 
     def items(self, obj):
-        pass
+        if obj:
+            return BlogPost.objects.filter(category__slug=obj).order_by('-publish_date')[:blog_settings['posts_per_page']]
+        return BlogPost.objects.order_by('-publish_date')[:blog_settings['posts_per_page']]
 
     def item_title(self, item, obj):
-        pass
+        translation_exists = False
+        post_translations = Translation.objects.filter(post=item)
+        if post_translations.count() > 0 and blog_settings['multilingual']
+            orig_lang = item.original_language
+            if len(orig_lang) < 2:
+                orig_lang = settings.LANGUAGE_CODE[0:2]
+            for post_translation in post_translations:
+                if self.current_language[0:2] == post_translation.language[0:2]:
+                    return post_translation.title
+        return item.title
+
+    def item_pubdate(self, item):
+        return item.publish_date
+
+    def item_author_name(self, item):
+        if blog_settings['show_author']:
+            if blog_settings['use_authors_username']:
+                return item.author.get_username()
+            return item.author.get_full_name()
+        return None
 
     def item_description(self, item, obj):
-        pass
+        translation_exists = False
+        post_translations = Translation.objects.filter(post=item)
+        if post_translation.count() > 0 and blog_settings['multilingual']:
+            orig_lang = item.original_language
+            if len(orig_lang) < 2:
+                orig_lang = settings.LANGUAGE_CODE[0:2]
+                for post_translation in post_translations:
+                    if self.current_language[:2] == post_translation.language[:2]:
+                        return post_translation.content
+        return item.content
