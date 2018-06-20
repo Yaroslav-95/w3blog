@@ -1,4 +1,4 @@
-from django.contrib.syndication.views. import Feed
+from django.contrib.syndication.views import Feed
 from django.urls import reverse
 from weblog.models import BlogPost, Translation, Category, CategoryTranslation
 from weblog.apps import SETTINGS as blog_settings
@@ -8,15 +8,15 @@ from django.utils import translation
 class BlogFeed(Feed):
 
     def get_object(self, request, category_slug=None):
+        self.current_language = translation.get_language()
+        if self.current_language is None:
+            self.current_language = settings.LANGUAGE_CODE
         if category_slug:
             if category_slug != 'misc':
-                self.category = Category.objects.get(slug=obj)
+                self.category = Category.objects.get(slug=category_slug)
                 self.category_name = self.category.name
-            self.current_language = translation.get_language()
-            if self.current_language is None:
-                self.current_language = settings.LANGUAGE_CODE
-            if IS_MULTILINGUAL and obj != 'misc':
-                category_translations = CategoryTranslation.objects.filter(category=category)
+            if blog_settings['multilingual'] and category_slug != 'misc':
+                category_translations = CategoryTranslation.objects.filter(category=self.category)
                 if category_translations.count() > 0:
                     for cat_trans in category_translations:
                         if self.current_language[0:2] == cat_trans.language[0:2]:
@@ -46,10 +46,10 @@ class BlogFeed(Feed):
             return BlogPost.objects.filter(category__slug=obj).order_by('-publish_date')[:blog_settings['posts_per_page']]
         return BlogPost.objects.order_by('-publish_date')[:blog_settings['posts_per_page']]
 
-    def item_title(self, item, obj):
+    def item_title(self, item):
         translation_exists = False
         post_translations = Translation.objects.filter(post=item)
-        if post_translations.count() > 0 and blog_settings['multilingual']
+        if post_translations.count() > 0 and blog_settings['multilingual']:
             orig_lang = item.original_language
             if len(orig_lang) < 2:
                 orig_lang = settings.LANGUAGE_CODE[0:2]
@@ -68,10 +68,10 @@ class BlogFeed(Feed):
             return item.author.get_full_name()
         return None
 
-    def item_description(self, item, obj):
+    def item_description(self, item):
         translation_exists = False
         post_translations = Translation.objects.filter(post=item)
-        if post_translation.count() > 0 and blog_settings['multilingual']:
+        if post_translations.count() > 0 and blog_settings['multilingual']:
             orig_lang = item.original_language
             if len(orig_lang) < 2:
                 orig_lang = settings.LANGUAGE_CODE[0:2]
