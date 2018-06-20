@@ -1,5 +1,7 @@
 from django.conf.urls import url
 from . import views
+from weblog.feeds import BlogFeed
+from weblog.apps import SETTINGS as blog_settings
 
 app_name = 'weblog'
 urlpatterns = [
@@ -10,3 +12,9 @@ urlpatterns = [
     url(r'^(?P<category_slug>[-\w]+)/$', views.Index, name='CategoryIndex'),
     url(r'^(?P<category_slug>[-\w]+)/(?P<post_slug>[-\w]+)/$', views.PostView, name='PostView'),
 ]
+
+if blog_settings['enable_rss']:
+    urlpatters += [
+            url(r'^/rss/$', BlogFeed(), name='RSS'),
+            url(r'^/(?P<category_slug>[-\w]+)/rss/$', BlogFeed(), name='CategoryRSS'),
+            ]

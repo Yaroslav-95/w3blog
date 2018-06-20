@@ -12,6 +12,7 @@ SETTINGS = {
     'show_categories': False,
     'show_archive': True,
     'posts_per_page': 10,
+    'enable_rss': True,
 }
 
 class WeblogConfig(AppConfig):

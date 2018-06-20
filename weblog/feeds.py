@@ -5,20 +5,6 @@ from weblog.apps import SETTINGS as blog_settings
 from django.utils.translation import ugettext_lazy as _, pgettext_lazy
 from django.utils import translation
 
-class MainFeed(Feed):
-    title = _('%(blog_title)s RSS feed') % {'blog_title': blog_settings['blog_title']}
-    link = reverse('weblog:Index')
-    description = _('Latest blog posts on %(blog_title)s') % {'blog_title': blog_settings['blog_title']}
-
-    def items(self):
-        return BlogPost.objects.order_by('-publish_date')[:blog_settings['posts_per_page']]
-
-    def item_title(self, item):
-        return item.title
-
-    def item_description(self, item):
-        return item.content
-
 class BlogFeed(Feed):
 
     def get_object(self, request, category_slug=None):
