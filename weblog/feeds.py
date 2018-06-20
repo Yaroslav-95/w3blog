@@ -1,0 +1,65 @@
+from django.contrib.syndication.views. import Feed
+from django.urls import reverse
+from weblog.models import BlogPost, Category, CategoryTranslation
+from weblog.apps import SETTINGS as blog_settings
+from django.utils.translation import ugettext_lazy as _, pgettext_lazy
+from django.utils import translation
+
+class MainFeed(Feed):
+    title = _('%(blog_title)s RSS feed') % {'blog_title': blog_settings['blog_title']}
+    link = reverse('weblog:Index')
+    description = _('Latest blog posts on %(blog_title)s') % {'blog_title': blog_settings['blog_title']}
+
+    def items(self):
+        return BlogPost.objects.order_by('-publish_date')[:blog_settings['posts_per_page']]
+
+    def item_title(self, item):
+        return item.title
+
+    def item_description(self, item):
+        return item.content
+
+class BlogFeed(Feed):
+
+    def get_object(self, request, category_slug=None):
+        if category_slug:
+            if category_slug != 'misc':
+                self.category = Category.objects.get(slug=obj)
+                self.category_name = self.category.name
+            self.current_language = translation.get_language()
+            if self.current_language is None:
+                self.current_language = settings.LANGUAGE_CODE
+            if IS_MULTILINGUAL and obj != 'misc':
+                category_translations = CategoryTranslation.objects.filter(category=category)
+                if category_translations.count() > 0:
+                    for cat_trans in category_translations:
+                        if self.current_language[0:2] == cat_trans.language[0:2]:
+                            self.category_name = cat_trans
+            elif category_slug == 'misc':
+                self.category_name = pgettext_lazy('Posts without category', 'Uncategorized')
+                return category_slug
+        return None
+
+    def title(self, obj):
+        if obj:
+            return _('%(blog_title)s\'s %(category_name)s RSS feed') % {'blog_title': blog_settings['blog_title'], 'category_name': self.category_name}
+        return _('%(blog_title)s RSS feed') % {'blog_title': blog_settings['blog_title']}
+
+    def link(self, obj):
+        if obj:
+            return reverse('weblog:CategoryIndex', kwargs={'category_slug': obj})
+        return reverse('weblog:Index')
+
+    def description(self, obj):
+        if obj:
+            return _('Latest %(category_name)s blog posts on %(blog_title)s') % {'blog_title': blog_settings['blog_title'], 'category_name': self.category_name}
+        return _('Latest blog posts on %(blog_title)s') % {'blog_title': blog_settings['blog_title']}
+
+    def items(self, obj):
+        pass
+
+    def item_title(self, item, obj):
+        pass
+
+    def item_description(self, item, obj):
+        pass
