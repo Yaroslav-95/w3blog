@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^(?P<year>[0-9]{4})/(?P<month>[0-9]{1,2})/$', views.Index, name='ArchiveIndex'),
     url(r'^(?P<category_slug>[-\w]+)/$', views.Index, name='CategoryIndex'),
     url(r'^(?P<category_slug>[-\w]+)/(?P<post_slug>[-\w]+)/$', views.PostView, name='PostView'),
+    url(r'^(?P<category_slug>[-\w]+)/(?P<post_slug>[-\w]+)/(?P<language>[-\w]+)/$', views.PostView, name='TranslationView'),
 ]

@@ -153,7 +153,9 @@ def Index(request, **kwargs):
     return render(request, 'weblog/index.html', context_dict)
 
 
-def PostView(request, category_slug, post_slug):
+def PostView(request, category_slug, post_slug, language=None):
+    if language and not IS_MULTILINGUAL:
+        redirect('weblog:PostView', category_slug=category_slug, post_slug=post_slug)
     post = get_object_or_404(BlogPost, slug=post_slug)
     context_dict = blog_settings.copy()
     context_dict['comment_form'] = PostCommentForm()
@@ -218,7 +220,9 @@ def PostView(request, category_slug, post_slug):
     context_dict['languages'] = [orig_lang,]
     for post_translation in post_translations:
         context_dict['languages'].append(post_translation.language)
-        if current_language[0:2] == post_translation.language[0:2]:
+        if language and language == post_translation.language[0:2]:
+            context_dict['post_translation'] = post_translation
+        elif current_language[0:2] == post_translation.language[0:2]:
             context_dict['post_translation'] = post_translation
     if 'post_translation' in context_dict:
         context_dict['breadcrumbs'].append({'url': post.get_absolute_url(), 'name': post_translation.title})
