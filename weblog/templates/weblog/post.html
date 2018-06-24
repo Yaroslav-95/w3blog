@@ -13,7 +13,7 @@
     {% endif %}
     {% if post_categories %}
     <hr>
-    <p>{% trans 'Categories' context 'Post categories' %}: 
+    <p>{% trans 'Categories' context 'Post categories' %}:
         {% for post_category in post_categories %}
         <a class="label label-info" href="{% url 'weblog:CategoryIndex' category_slug=post_category.slug %}">{{ post_category.name }}</a>
         {% endfor %}
@@ -65,3 +65,4 @@
     {% endif %}
 </div>
 {% endblock %}
+

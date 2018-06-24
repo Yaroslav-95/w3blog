@@ -218,6 +218,7 @@ def PostView(request, category_slug, post_slug, language=None):
     if len(orig_lang) < 2:
         orig_lang = settings.LANGUAGE_CODE[0:2]
     context_dict['languages'] = [orig_lang,]
+    context_dict['all_languages'] = settings.LANGUAGES
     for post_translation in post_translations:
         context_dict['languages'].append(post_translation.language)
         if language and language == post_translation.language[0:2]:
