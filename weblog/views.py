@@ -47,7 +47,7 @@ def Index(request, **kwargs):
             all_pages = all_pages.filter(published=True, publish_date__lte=now, publish_date__month=month)
             context_dict['breadcrumbs'].append({'url': reverse('weblog:ArchiveIndex', kwargs={'year': year, 'month': month}), 'name': MONTHS[int(month)-1]})
 
-    # Check how many blog posts are there in total, to calculate into how many pages
+    # Check how many blog posts there are in total, to calculate into how many pages
     # the index needs to be divided
     post_count = all_pages.count()
     if post_count < 1:
@@ -216,15 +216,21 @@ def PostView(request, category_slug, post_slug, language=None):
         return render(request, 'weblog/post.html', context_dict)
     orig_lang = post.original_language
     if len(orig_lang) < 2:
-        orig_lang = settings.LANGUAGE_CODE[0:2]
-    context_dict['languages'] = [orig_lang,]
-    context_dict['all_languages'] = settings.LANGUAGES
+        orig_lang = settings.LANGUAGE_CODE[:2]
+    context_dict['post_languages'] = []
+    post_languages = []
     for post_translation in post_translations:
-        context_dict['languages'].append(post_translation.language)
+        post_languages.append(post_translation.language[:2].lower())
         if language and language == post_translation.language[0:2]:
             context_dict['post_translation'] = post_translation
         elif current_language[0:2] == post_translation.language[0:2]:
             context_dict['post_translation'] = post_translation
+    for lang in settings.LANGUAGES:
+        if lang[0][:2] == orig_lang.lower():
+            context_dict['post_languages'].append(lang)
+            continue
+        if lang[0][:2] in post_languages:
+            context_dict['post_languages'].append(lang)
     if 'post_translation' in context_dict:
         context_dict['breadcrumbs'].append({'url': post.get_absolute_url(), 'name': post_translation.title})
     else:

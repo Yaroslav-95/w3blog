@@ -5,6 +5,18 @@
 <div class="container-fluid blogpost">
     <h2>{% if post_translation %}{{ post_translation.title }}{% else %}{{ post.title }}{% endif %}</h2>
     <p class="publish-info">{% blocktrans with publish_date=post.publish_date %}Published on {{ publish_date }}{% endblocktrans %}{% if post_author %}{% blocktrans with author=post_author context 'Written by (Author)' %}, by {{ author }}{% endblocktrans %}{% endif %}</p>
+    {% if languages %}
+    <form>
+        <div class="form-group">
+            <label for="post-languages">{% trans 'Read in another language' %}</label>
+            <select class="form-control" id="post-languages" name="post-language">
+                {% for lang in post_languages %}
+                <option value="{{ lang[0] }}">{{ lang[1] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </form>
+    {% endif %}
     <hr>
     {% if post_translation %}
     {{ post_translation.content|safe }}
