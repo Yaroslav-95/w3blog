@@ -159,6 +159,7 @@ def PostView(request, category_slug, post_slug, language=None):
     post = get_object_or_404(BlogPost, slug=post_slug)
     context_dict = blog_settings.copy()
     context_dict['comment_form'] = PostCommentForm()
+    context_dict['post_url'] = post.get_absolute_url()
     post_translations = Translation.objects.filter(post=post)
     category = None
     current_language = translation.get_language()

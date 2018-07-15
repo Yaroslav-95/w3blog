@@ -5,13 +5,13 @@
 <div class="container-fluid blogpost">
     <h2>{% if post_translation %}{{ post_translation.title }}{% else %}{{ post.title }}{% endif %}</h2>
     <p class="publish-info">{% blocktrans with publish_date=post.publish_date %}Published on {{ publish_date }}{% endblocktrans %}{% if post_author %}{% blocktrans with author=post_author context 'Written by (Author)' %}, by {{ author }}{% endblocktrans %}{% endif %}</p>
-    {% if languages %}
+    {% if post_languages %}
     <form>
         <div class="form-group">
-            <label for="post-languages">{% trans 'Read in another language' %}</label>
-            <select class="form-control" id="post-languages" name="post-language">
+            <select class="form-control" id="post-languages" name="post-language" onchange="changeLang(this.value)">
+                <option disabled selected>{% trans 'Read in another language' %}</option>
                 {% for lang in post_languages %}
-                <option value="{{ lang[0] }}">{{ lang[1] }}</option>
+                <option value="{{ lang.0 }}">{{ lang.1 }}</option>
                 {% endfor %}
             </select>
         </div>
@@ -76,5 +76,10 @@
     {% endif %}
     {% endif %}
 </div>
+<script>
+    function changeLang(lang){
+        window.location = "{{ post_url }}"+lang;
+    }
+</script>
 {% endblock %}
 
