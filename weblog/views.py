@@ -19,6 +19,7 @@ USE_AUTHORS_USERNAME = blog_settings['use_authors_username']
 ENABLE_COMMENTS = blog_settings['enable_comments']
 ALLOW_ANON_COMMENTS = blog_settings['allow_anon_comments']
 
+# View for the blog's home page, as well as category and archive pages
 def Index(request, **kwargs):
     context_dict = blog_settings.copy()
     now = datetime.datetime.now()
@@ -71,7 +72,7 @@ def Index(request, **kwargs):
     # Check for pinned posts if it is the home page of the blog
     # and get the pinned and necessary posts depending on the page
     posts_raw = list(all_pages[slice_start:slice_end])
-    if category is None:
+    if len(kwargs) < 1:
         for pinned_post in BlogPost.objects.filter(pinned=True).order_by('-pin_priority'):
             if pinned_post in posts_raw:
                 posts_raw.remove(pinned_post)
@@ -154,44 +155,63 @@ def Index(request, **kwargs):
 
 
 def PostView(request, category_slug, post_slug, language=None):
+    # If the multilingual setting is off, but somehow a language was passed
+    # in the url, redirect to the original post
     if language and not IS_MULTILINGUAL:
         redirect('weblog:PostView', category_slug=category_slug, post_slug=post_slug)
+
     post = get_object_or_404(BlogPost, slug=post_slug)
     context_dict = blog_settings.copy()
     context_dict['comment_form'] = PostCommentForm()
     context_dict['post_url'] = post.get_absolute_url()
     post_translations = Translation.objects.filter(post=post)
     category = None
+    # Get the current language in case there is a translation for the post in that language
     current_language = translation.get_language()
     if current_language is None:
         current_language = settings.LANGUAGE_CODE
+
+    # Check to see if the category slug is misc, if it is, it means that the
+    # post doesn't belong in any category
     if category_slug:
         if category_slug == 'misc':
             context_dict['category'] = 'misc'
         else:
             category = get_object_or_404(Category, slug=category_slug)
             context_dict['category'] = category
+            # If we have the multilingual setting on, get the translation for the category
             if IS_MULTILINGUAL:
                 category_translations = CategoryTranslation.objects.filter(category=category)
                 if category_translations.count() > 0:
                     for cat_trans in category_translations:
                         if current_language[0:2] == cat_trans.language[0:2]:
                             context_dict['category'] = cat_trans
+        # Put the necessary data about the category for the breadcrumbs
         if category_slug == 'misc':
             context_dict['breadcrumbs'] = [{'url': reverse('weblog:CategoryIndex', kwargs={'category_slug': category_slug}), 'name': pgettext_lazy('Posts without category', 'Uncategorized')},]
         else:
             context_dict['breadcrumbs'] = [{'url': reverse('weblog:CategoryIndex', kwargs={'category_slug': category_slug}), 'name': context_dict['category']},]
+
+    # Put the necessary information about the author, based on the
+    # current project's settings
     if SHOW_AUTHOR:
         context_dict['post_author'] = post.author.get_full_name()
         if USE_AUTHORS_USERNAME:
             context_dict['post_author'] = post.author.get_username()
+
+    # Should we allow comments?
     if ENABLE_COMMENTS:
         context_dict['comments'] = PostComment.objects.filter(post=post)
+
+    # If this is a POST request, it (probably) means that the user is attempting to post a comment
     if request.method == 'POST':
         form = PostCommentForm(request.POST)
         context_dict['comment_submission'] = True
+        # Check that the form data is clean and correct
         if form.is_valid():
             comment_content = form.cleaned_data['content']
+            # Make sure that either anonymous comments are allowed or
+            # that the user is authenticated
             if request.user.is_authenticated():
                 new_comment = PostComment(author=request.user, post=post, content=comment_content)
                 new_comment.save()
@@ -202,7 +222,10 @@ def PostView(request, category_slug, post_slug, language=None):
                 context_dict['comment_submission_error'] = _('You need to sign in to submit a comment')
         else:
             context_dict['comment_submission_error'] = _('Error submitting comment: Invalid data')
+
+    # Put the post content in the context dictionary
     context_dict['post'] = post
+    # Get all the categories, and if necessary, their translations
     if post.categories.all().count() > 0:
         context_dict['post_categories'] = []
         for raw_category in post.categories.all():
@@ -212,12 +235,20 @@ def PostView(request, category_slug, post_slug, language=None):
                     if current_language[0:2] == category_translation.language[0:2]:
                         next_category['name'] = category_translation.name
             context_dict['post_categories'].append(next_category)
+
+    # Breadcrumbs data about the post
     if post_translations.count() < 1 or not IS_MULTILINGUAL:
         context_dict['breadcrumbs'].append({'url': post.get_absolute_url(), 'name': post.title})
         return render(request, 'weblog/post.html', context_dict)
+
+    # Get the original languageof the post, if it is set, otherwise
+    # assume that it is the language of the site (the one set in settings.py)
     orig_lang = post.original_language
     if len(orig_lang) < 2:
         orig_lang = settings.LANGUAGE_CODE[:2]
+    # Get the languages for all the translations of the post, so that
+    # if a visitor desires, they can read the post in another language
+    # agnostic of their locale or site preferences
     context_dict['post_languages'] = []
     post_languages = []
     for post_translation in post_translations:
@@ -232,15 +263,27 @@ def PostView(request, category_slug, post_slug, language=None):
             continue
         if lang[0][:2] in post_languages:
             context_dict['post_languages'].append(lang)
+
+    # If we are reading a translation, and not the original text,
+    # use those translations for the breadcrumbs, otherwise, use the original title
     if 'post_translation' in context_dict:
         context_dict['breadcrumbs'].append({'url': post.get_absolute_url(), 'name': post_translation.title})
     else:
         context_dict['breadcrumbs'].append({'url': post.get_absolute_url(), 'name': post.title})
     return render(request, 'weblog/post.html', context_dict)
 
+# A dirty hack to change the language on the fly.
+# Was meant for testing purposes, but I suppose
+# it can also be used on production.
+# Be aware that it changes the language settings
+# for the whole site/project for the session
 def ChangeLanguage(request, language):
     translation.activate(language)
     request.session[translation.LANGUAGE_SESSION_KEY] = language
     if request.GET.get('next'):
-        return HttpResponseRedirect(request.GET['next'])
-    return HttpResponseRedirect(reverse('weblog:Index'))
+        response = HttpResponseRedirect(request.GET['next'])
+        response.set_cookie(settings.LANGUAGE_COOKIE_NAME, language)
+        return response
+    response = HttpResponseRedirect(reverse('weblog:Index'))
+    response.set_cookie(settings.LANGUAGE_COOKIE_NAME, language)
+    return response
