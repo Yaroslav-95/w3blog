@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-17 23:24+0300\n"
+"POT-Creation-Date: 2018-07-17 23:47+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,34 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: feeds.py:25 templates/weblog/index.html:6 templatetags/weblog_extras.py:43
+#: views.py:94 views.py:181
+msgctxt "Posts without category"
+msgid "Uncategorized"
+msgstr "Sin categoría"
+
+#: feeds.py:31
+#, fuzzy, python-format
+#| msgctxt "Posts in category"
+#| msgid "Posts in %(category_name)s"
+msgid "%(blog_title)s's %(category_name)s RSS feed"
+msgstr "RSS de %(category_name)s en %(blog_title)s"
+
+#: feeds.py:32
+#, python-format
+msgid "%(blog_title)s RSS feed"
+msgstr "RSS de %(blog_title)s"
+
+#: feeds.py:41
+#, python-format
+msgid "Latest %(category_name)s blog posts on %(blog_title)s"
+msgstr "Las entradas más nueva de %(category_name)s en %(blog_title)s"
+
+#: feeds.py:42
+#, python-format
+msgid "Latest blog posts on %(blog_title)s"
+msgstr "Las entradas más nueva en %(blog_title)s"
 
 #: models.py:8 models.py:23
 msgctxt "Noun, not personal name"
@@ -129,12 +157,6 @@ msgstr "Comentario"
 msgctxt "Noun"
 msgid "Comments"
 msgstr "Comentarios"
-
-#: templates/weblog/index.html:6 templatetags/weblog_extras.py:43 views.py:94
-#: views.py:181
-msgctxt "Posts without category"
-msgid "Uncategorized"
-msgstr "Sin categoría"
 
 #: templates/weblog/index.html:11 templates/weblog/index.html:28
 msgctxt "Home page"
