@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-31 14:31+0300\n"
+"POT-Creation-Date: 2018-07-17 23:24+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,7 +38,7 @@ msgctxt "Post category"
 msgid "Category"
 msgstr "Категория"
 
-#: models.py:20 models.py:46 templates/weblog/post.html:16
+#: models.py:20 models.py:46 templates/weblog/post.html:28
 #: templates/weblog/sidebar_categories.html:3
 msgctxt "Post categories"
 msgid "Categories"
@@ -131,7 +131,7 @@ msgid "Comments"
 msgstr "Комментарии"
 
 #: templates/weblog/index.html:6 templatetags/weblog_extras.py:43 views.py:94
-#: views.py:178
+#: views.py:181
 msgctxt "Posts without category"
 msgid "Uncategorized"
 msgstr "Без категории"
@@ -209,28 +209,32 @@ msgstr "Последняя"
 msgid "Nothing has been posted yet."
 msgstr "Нет записи на данный момент."
 
-#: templates/weblog/post.html:24
+#: templates/weblog/post.html:12
+msgid "Read in another language"
+msgstr "Читать на другом языке"
+
+#: templates/weblog/post.html:36
 msgid "Leave a comment"
 msgstr "Оставьте комментарий"
 
-#: templates/weblog/post.html:31
+#: templates/weblog/post.html:43
 msgid "Submit comment"
 msgstr "Отправить комметарий"
 
-#: templates/weblog/post.html:35
+#: templates/weblog/post.html:47
 msgid "To leave a comment you need to sign in"
 msgstr "Для того чтобы оставить комментарий, зайдите в свою учетную запись"
 
-#: templates/weblog/post.html:47
+#: templates/weblog/post.html:59
 msgid "Comment submited successfully"
 msgstr "Ваш комментарий был успешно отправлен"
 
-#: templates/weblog/post.html:54
+#: templates/weblog/post.html:66
 msgctxt "Unauthenticated comment poster"
 msgid "Anonymous"
 msgstr "Анонимный"
 
-#: templates/weblog/post.html:62
+#: templates/weblog/post.html:74
 msgid "Nobody has left a comment on this post yet"
 msgstr "У этой записи нет комментарии."
 
@@ -287,11 +291,11 @@ msgstr ""
 msgid "December"
 msgstr ""
 
-#: views.py:199
+#: views.py:202
 msgid "You need to sign in to submit a comment"
 msgstr "Для того чтобы оставить комментарий, зайдите в свою учетную запись"
 
-#: views.py:201
+#: views.py:204
 msgid "Error submitting comment: Invalid data"
 msgstr "Ошибка: неправильный формат данных"
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-31 14:31+0300\n"
+"POT-Creation-Date: 2018-07-17 23:24+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -36,7 +36,7 @@ msgctxt "Post category"
 msgid "Category"
 msgstr "Categoría"
 
-#: models.py:20 models.py:46 templates/weblog/post.html:16
+#: models.py:20 models.py:46 templates/weblog/post.html:28
 #: templates/weblog/sidebar_categories.html:3
 msgctxt "Post categories"
 msgid "Categories"
@@ -131,7 +131,7 @@ msgid "Comments"
 msgstr "Comentarios"
 
 #: templates/weblog/index.html:6 templatetags/weblog_extras.py:43 views.py:94
-#: views.py:178
+#: views.py:181
 msgctxt "Posts without category"
 msgid "Uncategorized"
 msgstr "Sin categoría"
@@ -209,28 +209,32 @@ msgstr "Última"
 msgid "Nothing has been posted yet."
 msgstr "No hay ninguna publicación."
 
-#: templates/weblog/post.html:24
+#: templates/weblog/post.html:12
+msgid "Read in another language"
+msgstr "Leer en otro idioma"
+
+#: templates/weblog/post.html:36
 msgid "Leave a comment"
 msgstr "Dejar un comentario"
 
-#: templates/weblog/post.html:31
+#: templates/weblog/post.html:43
 msgid "Submit comment"
 msgstr "Enviar comentario"
 
-#: templates/weblog/post.html:35
+#: templates/weblog/post.html:47
 msgid "To leave a comment you need to sign in"
 msgstr "Para poder comentar, necesitar iniciar sesión."
 
-#: templates/weblog/post.html:47
+#: templates/weblog/post.html:59
 msgid "Comment submited successfully"
 msgstr "Comentario enviado exitosamente"
 
-#: templates/weblog/post.html:54
+#: templates/weblog/post.html:66
 msgctxt "Unauthenticated comment poster"
 msgid "Anonymous"
 msgstr "Anónimo"
 
-#: templates/weblog/post.html:62
+#: templates/weblog/post.html:74
 msgid "Nobody has left a comment on this post yet"
 msgstr "No hay ningún comentario relacionado a esta entrada"
 
@@ -287,11 +291,11 @@ msgstr ""
 msgid "December"
 msgstr ""
 
-#: views.py:199
+#: views.py:202
 msgid "You need to sign in to submit a comment"
 msgstr "Para poder comentar necesita iniciar sesión"
 
-#: views.py:201
+#: views.py:204
 msgid "Error submitting comment: Invalid data"
 msgstr "Error al intentar enviar el comentario: Información invalida"
 
