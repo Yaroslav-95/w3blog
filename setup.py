@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 import os
 from setuptools import find_packages, setup
 
@@ -10,7 +9,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='django-weblog',
-    version='0.3-postlang.6',
+    version='0.4-testing.0',
     packages=find_packages(),
     include_package_data=True,
     license='BSD License',
