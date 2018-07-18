@@ -9,7 +9,7 @@ with open(os.path.join(os.path.dirname(__file__), 'README.md')) as readme:
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
-    name='django-weblog',
+    name='w3blog',
     version='0.4.0',
     packages=find_packages(),
     include_package_data=True,

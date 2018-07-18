@@ -1,4 +1,14 @@
+
+### Python ###
 dist/
 sdist/
 __pycache__/
 *.egg-info
+build/
+*.py
+
+### Other ###
+*.log
+*.tex
+*.tar
+*.gz
