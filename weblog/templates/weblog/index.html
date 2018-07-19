@@ -25,7 +25,11 @@
 <h1>{% blocktrans with category_name=category.name context 'Posts from archive (year/month,year)' %}Posts from {{ year }}{% endblocktrans %}</h1>
 {% endif %}
 {% else %}
+{% if home_title %}
+<h2>{{ home_title }}</h2>
+{% else %}
 <h1>{{ blog_title }} - {% trans "Home" context "Home page" %}</h1>
+{% endif %}
 {% endif %}
         {% if posts or pinned_posts %}
         {% if pinned_posts %}
@@ -97,6 +101,6 @@
         {% endif %}
         {% endif %}
         {% else %}
-        <div class="text-center"><h2>{% trans 'Nothing has been posted yet.' %}</h2></div>
+        <div class="text-center"><h3>{% trans 'Nothing has been posted yet.' %}</h3></div>
         {% endif %}
 {% endblock %}
