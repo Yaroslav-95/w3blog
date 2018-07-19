@@ -36,6 +36,7 @@ WEBLOG_SETTINGS = {
     'show_archive': True,
     'posts_per_page': 10,
     'enable_rss': True,
+    'home_title': 'Welcome to the blog!',
 }
 ```
 
