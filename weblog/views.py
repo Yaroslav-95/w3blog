@@ -212,7 +212,7 @@ def PostView(request, category_slug, post_slug, language=None):
             comment_content = form.cleaned_data['content']
             # Make sure that either anonymous comments are allowed or
             # that the user is authenticated
-            if request.user.is_authenticated():
+            if request.user.is_authenticated:
                 new_comment = PostComment(author=request.user, post=post, content=comment_content)
                 new_comment.save()
             elif ALLOW_ANON_COMMENTS:
