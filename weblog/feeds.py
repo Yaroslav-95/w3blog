@@ -1,4 +1,5 @@
 from django.contrib.syndication.views import Feed
+from django.conf import settings
 from django.urls import reverse
 from weblog.models import BlogPost, Translation, Category, CategoryTranslation
 from weblog.apps import SETTINGS as blog_settings
