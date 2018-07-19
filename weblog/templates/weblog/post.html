@@ -4,7 +4,7 @@
 {% block blog_content_block %}
 <div class="container-fluid blogpost">
     <h2 class="post-title">{% if post_translation %}{{ post_translation.title }}{% else %}{{ post.title }}{% endif %}</h2>
-    <p class="publish-info">{% blocktrans with publish_date=post.publish_date %}Published on <span class="post-publish-date">{{ publish_date }}</span>{% endblocktrans %}{% if post.author %}{% blocktrans with author=post.author context 'Written by (Author)' %}, by <span class="post-author">{{ author }}</span>{% endblocktrans %}{% endif %}</p>
+    <p class="publish-info">{% blocktrans with publish_date=post.publish_date %}Published on <span class="post-publish-date">{{ publish_date }}</span>{% endblocktrans %}{% if post_author %}{% blocktrans with author=post_author context 'Written by (Author)' %}, by <span class="post-author">{{ author }}</span>{% endblocktrans %}{% endif %}</p>
     {% if post_languages %}
     <form>
         <div class="form-group">
