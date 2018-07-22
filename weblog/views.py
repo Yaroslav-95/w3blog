@@ -135,7 +135,7 @@ def Index(request, **kwargs):
                 if len(post_trans.preview_text) > 5:
                     post['preview_text'] = post_trans.preview_text
                 else:
-                    post['preview_text'] = post_trans.content.split('\n', 1)[0]+'</p>'
+                    post['preview_text'] = post_trans.content.split('</p>', 1)[0]+'</p>'
             else:
                 post['title'] = post_raw.title
                 post['content'] = post_raw.content
@@ -255,7 +255,7 @@ def PostView(request, category_slug, post_slug, language=None):
         post_languages.append(post_translation.language[:2].lower())
         if language and language == post_translation.language[0:2]:
             context_dict['post_translation'] = post_translation
-        elif current_language[0:2] == post_translation.language[0:2]:
+        elif current_language[0:2] == post_translation.language[0:2] and not language:
             context_dict['post_translation'] = post_translation
     for lang in settings.LANGUAGES:
         if lang[0][:2] == orig_lang.lower():
