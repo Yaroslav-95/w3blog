@@ -42,6 +42,8 @@ WEBLOG_SETTINGS = {
 
 5. Note that if you use your own base template, you will either need to link Bootstrap (v4) in your base template's head, or write your own styles for the site based on the bootstrap classes. You will as well need to link files "weblog/css/weblog.css" and "weblog/js/weblog.js" in your html head, or write your own.
 
+Read more about it here: https://www.yaroslavps.com/weblog/python/w3blog-blog-engine/
+
 Note: This package depends on the following python packages (besides Django and their dependencies): django-summernote
 
 This project was previously named django-weblog, however, I had to renamed it due to there being an existing package with the same name in PyPI.
