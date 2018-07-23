@@ -39,7 +39,7 @@
             <h2 class="post-title"><a href="{{ post.url }}">{{ post.title }}</a></h2>
             <p class="publish-info">{% blocktrans with publish_date=post.publish_date %}Published on <span class="post-publish-date">{{ publish_date }}</span>{% endblocktrans %}{% if post.author %}{% blocktrans with author=post.author context 'Written by (Author)' %}, by <span class="post-author">{{ author }}</span>{% endblocktrans %}{% endif %}</p>
             <hr>
-            {% if post.preview_image %}<img class="img-responsive preview-img" src="{{ post.preview_image.url }}">{% endif %}
+            {% if post.preview_image %}<img class="img-fluid preview-img" src="{{ post.preview_image.url }}">{% endif %}
             {{ post.preview_text|safe }}
             <hr>
             <div class="text-right read-more-wrapper">
@@ -54,7 +54,7 @@
             <h2 class="post-title"><a href="{{ post.url }}">{{ post.title }}</a></h2>
             <p class="publish-info">{% blocktrans with publish_date=post.publish_date %}Published on <span class="post-publish-date">{{ publish_date }}</span>{% endblocktrans %}{% if post.author %}{% blocktrans with author=post.author context 'Written by (Author)' %}, by <span class="post-author">{{ author }}</span>{% endblocktrans %}{% endif %}</p>
             <hr>
-            {% if post.preview_image %}<img class="img-responsive preview-img" src="{{ post.preview_image.url }}">{% endif %}
+            {% if post.preview_image %}<img class="img-fluid preview-img" src="{{ post.preview_image.url }}">{% endif %}
             {{ post.preview_text|safe }}
             <hr>
             <div class="text-right read-more-wrapper">
