@@ -47,3 +47,7 @@ Read more about it here: https://www.yaroslavps.com/weblog/python/w3blog-blog-en
 Note: This package depends on the following python packages (besides Django and their dependencies): django-summernote
 
 This project was previously named django-weblog, however, I had to renamed it due to there being an existing package with the same name in PyPI.
+
+### Changelog ###
+
+You can view a short summary of changes for each release in the releases section of the project's page on Github.
