@@ -5,6 +5,7 @@ from weblog.models import BlogPost, Translation, Category, CategoryTranslation
 from weblog.apps import SETTINGS as blog_settings
 from django.utils.translation import ugettext_lazy as _, pgettext_lazy
 from django.utils import translation
+import datetime
 
 class BlogFeed(Feed):
 
@@ -43,9 +44,10 @@ class BlogFeed(Feed):
         return _('Latest blog posts on %(blog_title)s') % {'blog_title': blog_settings['blog_title']}
 
     def items(self, obj):
+        now = datetime.datetime.now()
         if obj:
-            return BlogPost.objects.filter(category__slug=obj).order_by('-publish_date')[:blog_settings['posts_per_page']]
-        return BlogPost.objects.order_by('-publish_date')[:blog_settings['posts_per_page']]
+            return BlogPost.objects.filter(category__slug=obj, published=True, publish_date__lte=now).order_by('-publish_date')[:blog_settings['posts_per_page']]
+        return BlogPost.objects.order_by('-publish_date').filter(published=True, publish_date__lte=now)[:blog_settings['posts_per_page']]
 
     def item_title(self, item):
         translation_exists = False
