@@ -1,13 +1,13 @@
 function toggleNode(caller){
-    state = $(caller).attr('node-state');
-    target = $(caller).attr('node-target');
+    state = caller.getAttribute('node-state');
+    target = document.getElementById(caller.getAttribute('node-target'));
     if(state=='closed'){
-        $(caller).html('—');
-        $(caller).attr('node-state', 'open');
+        caller.innerHTML =  '—';
+        caller.setAttribute('node-state', 'open');
     }
     else{
-        $(caller).html('+');
-        $(caller).attr('node-state', 'closed');
+        caller.innerHTML =  '+';
+        caller.setAttribute('node-state', 'closed');
     }
-    $('#'+target).toggle();
+    target.classList.toggle('show');
 }
