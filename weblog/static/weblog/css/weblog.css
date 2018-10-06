@@ -12,6 +12,100 @@ html{
     box-sizing: border-box;
 }
 
+a,
+button,
+input,
+textarea,
+ul,
+ol,
+li,
+p{
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+    color: #3e3e3e;
+}
+
+a, a:visited{
+    text-decoration: none;
+    color: #0080a0;
+    transition: 0.3s;
+}
+
+a:hover{
+    color: #0055a0;
+}
+
+.post-title,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6{
+    font-family: Georgia, serif;
+    color: #3e3e3e;
+}
+
+.post-title a{
+    font-family: Georgia, serif;
+}
+
+hr{
+    border: none;
+    height: 1px;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0), #3e3e3e, rgba(0, 0, 0, 0));
+}
+
+.navbar{
+    background-color: #222;
+}
+
+.nav-container{
+    padding: 0.5em 3em;
+}
+
+.navbar-brand, .navbar-brand:visited{
+    font-family: Georgia, serif;
+    color: #dedede;
+    font-size: 1.5em;
+}
+
+.blog-container{
+    position: relative;
+}
+
+.blog-wrapper{
+    display: flex;
+    justify-content: center;
+}
+
+.blog-content{
+    flex: 3;
+}
+
+.weblog-sidebar{
+    padding: 1em;
+}
+
+.blog-content{
+    max-width: 45em;
+}
+
+.blogpost{
+}
+
+.post-publish-date,
+.post-author{
+    font-style: italic;
+}
+
+.img-fluid{
+    max-width: 100%;
+}
+
+.text-right{
+    text-align: right;
+}
+
 .archive-list{
     list-style-type: none;
 }

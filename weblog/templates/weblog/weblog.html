@@ -15,13 +15,13 @@
     <li class="breadcrumb-item active"><a href="{% url 'weblog:Index' %}">{{ blog_title }}</a></li>
     {% endif %}
 </ul>
-<div class="row">
-    <div class="{% if show_sidebar %}col-sm-9{% else %}container-fluid{% endif %}">
+<div class="blog-wrapper">
+    <div class="blog-content">
         {% block blog_content_block %}
         {% endblock %}
     </div>
     {% if show_sidebar %}
-    <div class="col-sm-3 weblog-sidebar">
+    <div class="weblog-sidebar">
         {% if show_categories %}
         {% if category %}
         {% if category == 'misc' %}
