@@ -1,12 +1,14 @@
 from django.shortcuts import render, get_object_or_404, redirect, reverse
-from django.http import Http404, HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.conf import settings
 from django.utils import translation
 from django.utils.translation import ugettext_lazy as _, pgettext_lazy
+from django.core import serializers
 from .apps import SETTINGS as blog_settings
 from .models import BlogPost, Translation, PostComment, Category, CategoryTranslation, PostCommentForm
 from .templatetags.weblog_extras import MONTHS
 import datetime
+import json
 
 #Need to change the way this works later
 IS_MULTILINGUAL = blog_settings['multilingual']
@@ -58,6 +60,8 @@ def Index(request, **kwargs):
         page = int(request.GET['page'])-1
     if page * POSTS_PER_PAGE + 1 > post_count:
         page = 0
+    if 'nxtpage' in kwargs:
+        page = int(kwargs['nxtpage']) - 1
     context_dict['current_page'] = page+1
     slice_start = page*POSTS_PER_PAGE
     slice_end = page*POSTS_PER_PAGE + POSTS_PER_PAGE
@@ -149,6 +153,11 @@ def Index(request, **kwargs):
             pinned_posts.append(post)
         else:
             posts.append(post)
+
+    # If ajax is asking for the next page through the kwargs,
+    # just send the posts for the requested page without the other page elements
+    if 'nxtpage' in kwargs:
+        return render(request, 'weblog/nxtpage.html', { 'posts': posts })
     context_dict['posts'] = posts
     context_dict['pinned_posts'] = pinned_posts
     return render(request, 'weblog/index.html', context_dict)

@@ -12,6 +12,8 @@ SETTINGS = {
     'show_categories': False,
     'show_archive': True,
     'posts_per_page': 10,
+    'dynamic_load': False,
+    'infinite_load': False,
     'enable_rss': True,
 }
 

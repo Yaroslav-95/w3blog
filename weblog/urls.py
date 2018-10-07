@@ -15,6 +15,10 @@ if blog_settings['enable_rss']:
 
 urlpatterns += [
     url(r'^$', views.Index, name='Index'),
+    url(r'^ajaxnxtpage/page-(?P<nxtpage>[0-9]+)/$', views.Index, name='GetPosts'),
+    url(r'^ajaxnxtpage/(?P<year>[0-9]{4})/page-(?P<nxtpage>[0-9]+)/$', views.Index, name='GetArchivePosts'),
+    url(r'^ajaxnxtpage/(?P<year>[0-9]{4})/(?P<month>[0-9]{1,2})/page-(?P<nxtpage>[0-9]+)/$', views.Index, name='GetArchivePosts'),
+    url(r'^ajaxnxtpage/(?P<category_slug>[-\w]+)/page-(?P<nxtpage>[0-9]+)/$', views.Index, name='GetCategoryPosts'),
     url(r'^change-language/(?P<language>[-\w]+)/$', views.ChangeLanguage, name='ChangeLanguage'),
     url(r'^(?P<year>[0-9]{4})/$', views.Index, name='ArchiveIndex'),
     url(r'^(?P<year>[0-9]{4})/(?P<month>[0-9]{1,2})/$', views.Index, name='ArchiveIndex'),

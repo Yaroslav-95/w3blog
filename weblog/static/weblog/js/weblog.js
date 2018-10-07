@@ -11,3 +11,6 @@ function toggleNode(caller){
     }
     target.classList.toggle('show');
 }
+
+function loadBlogPosts(page = 2, category = null){
+}
