@@ -62,6 +62,13 @@
             </div>
         </div>
         {% endfor %}
+        {% if dynamic_load %}
+        {% if not infinite_load %}
+        <div class="nxtpage-container">
+            <a class="button nxtpage-button" href="#">{% trans 'Load more...' context 'Load more pages' %}</a>
+        </div>
+        {% endif %}
+        {% else %}
         {% if last_page > 1 %}
         <ul class="pagination">
             {% if current_page != 1 %}
@@ -100,6 +107,7 @@
         </ul>
         {% endif %}
         {% endif %}
+        {% endif %}
         {% else %}
         <div class="text-center"><h3>{% trans 'Nothing has been posted yet.' %}</h3></div>
         {% endif %}
@@ -107,8 +115,30 @@
     <script>
         var current_page = {{ current_page }};
         var last_page = {{ last_page }};
+        function loadNextPage(e){
+            try{
+                e.stopPropagation();
+                e.preventDefault();
+            }
+            catch(er){}
+            if (current_page != last_page){
+                current_page++;
+                {% if category %}
+                var url = "{% url 'weblog:GetCategoryPosts' category_slug=category.slug nxtpage=current_page %}";
+                {% else %}
+                var url = "{% url 'weblog:GetPosts' nxtpage=current_page %}";
+                {% endif %}
+                url = url.substring(0, url.length - 2)+current_page;
+                loadBlogPosts(url, current_page);
+                console.log("loading");
+            }
+        }
         {% if infinite_load %}
         {% else %}
+        window.addEventListener("load", function(){
+            var nxtpage_button = document.querySelector(".nxtpage-button");
+            nxtpage_button.addEventListener("click", loadNextPage);
+        });
         {% endif %}
     </script>
     {% endif %}
