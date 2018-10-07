@@ -6,6 +6,7 @@ html{
     min-width: 100%;
     margin: 0;
     padding: 0;
+    background-color: #dedede;
 }
 
 *{
@@ -13,9 +14,6 @@ html{
 }
 
 a,
-button,
-input,
-textarea,
 ul,
 ol,
 li,
@@ -32,6 +30,31 @@ a, a:visited{
 
 a:hover{
     color: #0055a0;
+}
+
+input,
+select,
+textarea{
+    background-color: #3e3e3e;
+    color: #dedede;
+    padding: 0.5em 1em;
+    border: 1px solid #2e2e2e;
+}
+
+.button,
+button{
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 1em;
+    color: #dedede;
+    background-color: #0080a0;
+    border: 1px solid #dedede;
+    padding: 0.5em 1em;
+    transition: 0.3s;
+}
+
+.button:hover,
+button:hover{
+    background-color: #0055a0;
 }
 
 .post-title,
@@ -77,14 +100,23 @@ hr{
 
 .weblog-categories{
     list-style: none;
+    padding: 0;
 }
 
 .weblog-categories li a{
-    padding: 1em;
+    display: block;
+    padding: 0.5em 1em;
+    color: #3e3e3e;
+}
+
+.weblog-categories li a:hover{
+    background-color: #0080a0;
+    color: #dedede;
 }
 
 .weblog-categories li a.active{
     background-color: #0055a0;
+    color: #dedede;
 }
 
 .breadcrumb{
@@ -104,7 +136,7 @@ hr{
     position: relative;
     display: block;
     float: left;
-    padding: 0.5em 55px;
+    padding: 0.3em 45px;
     background: #0080a0;
     color: #dedede;
 }
@@ -161,6 +193,32 @@ hr{
     border-left: 30px solid #2e2e2e;
 }
 
+.pagination{
+    list-style: none;
+    padding: 0;
+}
+
+.pagination li{
+    float: left;
+}
+
+.pagination li a{
+    position: relative;
+    display: block;
+    float: left;
+    padding: 1em 1.5em;
+}
+
+.pagination li a:hover{
+    background-color: #0080a0;
+    color: #dedede;
+}
+
+.pagination li.active a{
+    background-color: #0055a0;
+    color: #dedede;
+}
+
 .form-group input,
 .form-group textarea,
 .form-group select{
@@ -173,11 +231,14 @@ hr{
 
 .blog-wrapper{
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
+    padding-bottom: 2em;
 }
 
 .blog-content{
     flex: 3;
+    padding: 1em;
 }
 
 .weblog-sidebar{
@@ -204,6 +265,10 @@ hr{
     text-align: right;
 }
 
+.text-center{
+    text-align: center;
+}
+
 .archive-list{
     list-style-type: none;
 }
@@ -214,4 +279,43 @@ hr{
 
 .archive-child-list.show{
     display: block;
+}
+
+@media (max-width: 760px){
+    .blog-content,
+    .weblog-sidebar{
+        width: 100%;
+    }
+
+    .breadcrumb li a{
+        background: transparent;
+        padding: 0.5em 1em;
+    }
+
+    .breadcrumb li:last-child a{
+        color: #aaa;
+    }
+
+    .breadcrumb li a::after,
+    .breadcrumb li a::before{
+        height: auto;
+        width: auto;
+        border: 0;
+        left: auto;
+        top: auto;
+        margin: 0;
+    }
+
+    .breadcrumb li a::after{
+        content: "/";
+        color: #dedede;
+        margin-left: 1em;
+        position: relative;
+        display: inline-block;
+    }
+
+    .breadcrumb li:last-child a::after{
+        border: 0;
+        content: " ";
+    }
 }
