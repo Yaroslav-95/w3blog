@@ -223,10 +223,10 @@ def PostView(request, category_slug, post_slug, language=None):
             # Make sure that either anonymous comments are allowed or
             # that the user is authenticated
             if request.user.is_authenticated:
-                new_comment = PostComment(author=request.user, post=post, content=comment_content)
+                new_comment = PostComment(author=request.user, post=post, content=comment_content, publish_date=datetime.datetime.now())
                 new_comment.save()
             elif ALLOW_ANON_COMMENTS:
-                new_comment = PostComment(post=post, content=comment_content)
+                new_comment = PostComment(post=post, content=comment_content, publish_date=datetime.datetime.now())
                 new_comment.save()
             else:
                 context_dict['comment_submission_error'] = _('You need to sign in to submit a comment')

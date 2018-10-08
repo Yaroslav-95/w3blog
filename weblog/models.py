@@ -80,6 +80,7 @@ class PostComment(models.Model):
     author = models.ForeignKey(User, verbose_name=_('Author'), null=True, blank=True, on_delete=models.PROTECT)
     post = models.ForeignKey(BlogPost, verbose_name=pgettext_lazy('Noun, as in blog post', 'Post'), on_delete=models.CASCADE)
     content = models.TextField(verbose_name=pgettext_lazy('Of post, comment, article, etc.', 'Content'), blank=False)
+    publish_date = models.DateTimeField(verbose_name=_('Publish date'))
 
     class Meta:
         verbose_name = pgettext_lazy('Noun', 'Comment')

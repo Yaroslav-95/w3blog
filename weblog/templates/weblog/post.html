@@ -49,31 +49,34 @@
     {% if comments %}
     {% if comment_submission %}
     {% if comment_submission_error %}
-    <div class="alert alert-danger alert-dismissable">
-        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <div class="alert alert-error">
+        <!--<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>-->
         {{ comment_submission_error }}
     </div>
     {% else %}
-    <div class="alert alert-success alert-dismissable">
-        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <div class="alert alert-success">
+        <!--<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>-->
         {% trans 'Comment submited successfully' %}
     </div>
     {% endif %}
     {% endif %}
-    {% for comment in comments %}
-    <div class="media">
-        <div class="media-body">
-            <h4 class="media-heading">{% if comment.author %}{{ comment.author.get_username }}{% else %}{% trans 'Anonymous' context 'Unauthenticated comment poster' %}{% endif %}</h4>
-            <p>{{ comment.content }}</p>
+    <div id="comment-section">
+        {% for comment in comments %}
+            <div class="media">
+                <div class="media-body">
+                    <h4 class="media-heading">{% if comment.author %}{{ comment.author.get_username }}{% else %}{% trans 'Anonymous' context 'Unauthenticated comment poster' %}{% endif %}</h4>
+                    <p>{{ comment.content }}</p>
+                    <p class="media-date">{{ comment.publish_date }}</p>
+                </div>
+            </div>
+        {% endfor %}
+        {% else %}
+        <div class="text-center">
+            <br>
+            <h3>{% trans 'Nobody has left a comment on this post yet' %}</h3>
         </div>
+        {% endif %}
     </div>
-    {% endfor %}
-    {% else %}
-    <div class="text-center">
-        <br>
-        <h3>{% trans 'Nobody has left a comment on this post yet' %}</h3>
-    </div>
-    {% endif %}
     {% endif %}
 </div>
 <script>
