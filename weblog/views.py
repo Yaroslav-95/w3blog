@@ -47,6 +47,7 @@ def Index(request, **kwargs):
         context_dict['breadcrumbs'] = [{'url': reverse('weblog:ArchiveIndex', kwargs={'year': year}), 'name': str(year)},]
         if month:
             context_dict['month'] = MONTHS[int(month)-1]
+            context_dict['month_num'] = month
             all_pages = all_pages.filter(published=True, publish_date__lte=now, publish_date__month=month)
             context_dict['breadcrumbs'].append({'url': reverse('weblog:ArchiveIndex', kwargs={'year': year, 'month': month}), 'name': MONTHS[int(month)-1]})
 

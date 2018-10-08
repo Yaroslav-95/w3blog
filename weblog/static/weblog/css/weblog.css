@@ -42,6 +42,7 @@ textarea{
 }
 
 .button,
+.button:visited,
 button{
     font-family: "Helvetica Neue", Helvetica, sans-serif;
     font-size: 1em;
@@ -54,6 +55,7 @@ button{
 
 .button:hover,
 button:hover{
+    color: #dedede;
     background-color: #0055a0;
 }
 
@@ -182,7 +184,7 @@ hr{
 }
 
 .breadcrumb li:first-child a{
-    padding-left: 1em;
+    padding-left: 4em;
 }
 
 .breadcrumb li:last-child a{
@@ -269,8 +271,13 @@ hr{
     text-align: center;
 }
 
+.hidden{
+    display: none;
+}
+
 .archive-list{
     list-style-type: none;
+    padding-left: 1em;
 }
 
 .archive-child-list{
@@ -279,6 +286,11 @@ hr{
 
 .archive-child-list.show{
     display: block;
+}
+
+.nxtpage-container{
+    text-align: center;
+    padding: 2em;
 }
 
 @media (max-width: 760px){
@@ -292,6 +304,9 @@ hr{
         padding: 0.5em 1em;
     }
 
+    .breadcrumb li:first-child a{
+        padding-left: 1em;
+    }
     .breadcrumb li:last-child a{
         color: #aaa;
     }

@@ -62,14 +62,19 @@
             </div>
         </div>
         {% endfor %}
+        {% if last_page > 1 %}
         {% if dynamic_load %}
         {% if not infinite_load %}
-        <div class="nxtpage-container">
+        <div class="nxtpage-container text-center">
             <a class="button nxtpage-button" href="#">{% trans 'Load more...' context 'Load more pages' %}</a>
         </div>
         {% endif %}
+        <div class="loader-container text-center hidden">
+            <div class="loader">
+                {% trans 'Loading...' %}
+            </div>
+        </div>
         {% else %}
-        {% if last_page > 1 %}
         <ul class="pagination">
             {% if current_page != 1 %}
             <li title="{% trans 'First' context 'Page' %}"><a href="{% if category %}{% if category == 'misc' %}{% url 'weblog:CategoryIndex' category_slug='misc' %}{% else %}{% url 'weblog:CategoryIndex' category_slug=category.slug %}{% endif %}{% else %}{% url 'weblog:Index' %}{% endif %}">&laquo;</a></li>
@@ -115,6 +120,9 @@
     <script>
         var current_page = {{ current_page }};
         var last_page = {{ last_page }};
+        {% if not infinite_load %}
+        var nxtpage_button = document.querySelector(".nxtpage-button");
+        {% endif %}
         function loadNextPage(e){
             try{
                 e.stopPropagation();
@@ -125,18 +133,36 @@
                 current_page++;
                 {% if category %}
                 var url = "{% url 'weblog:GetCategoryPosts' category_slug=category.slug nxtpage=current_page %}";
+                {% elif year %}
+                {% if month_num %}
+                var url = "{% url 'weblog:GetArchivePosts' year=year month=month_num nxtpage=current_page %}";
+                {% else %}
+                var url = "{% url 'weblog:GetArchivePosts' year=year nxtpage=current_page %}";
+                {% endif %}
                 {% else %}
                 var url = "{% url 'weblog:GetPosts' nxtpage=current_page %}";
                 {% endif %}
                 url = url.substring(0, url.length - 2)+current_page;
+                {% if infinite_load %}
+                loadBlogPosts(url, current_page, true);
+                {% else %}
                 loadBlogPosts(url, current_page);
-                console.log("loading");
+                {% endif %}
+                {% if not infinite_load %}
+                if (current_page == last_page)
+                    document.querySelector(".nxtpage-container").removeChild(nxtpage_button);
+                {% endif %}
             }
         }
         {% if infinite_load %}
+        window.addEventListener("scroll", function(){
+            if (current_page != last_page){
+                if(document.documentElement.scrollHeight - document.documentElement.scrollTop === document.documentElement.clientHeight)
+                    loadNextPage();
+            }
+        });
         {% else %}
         window.addEventListener("load", function(){
-            var nxtpage_button = document.querySelector(".nxtpage-button");
             nxtpage_button.addEventListener("click", loadNextPage);
         });
         {% endif %}

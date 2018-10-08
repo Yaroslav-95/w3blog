@@ -12,23 +12,26 @@ function toggleNode(caller){
     target.classList.toggle('show');
 }
 
-function loadBlogPosts(url, page = 2){
+function loadBlogPosts(url, page = 2, isinfinite = false){
     var req = new XMLHttpRequest();
-    function insert(){
-        if (this.status == 200 && this.readyState == 4){
-            var blog_content = document.querySelector(".blog-content");
-            try{
-                var nxtpage_button = document.querySelector(".nxtpage-button");
-                nxtpage_button.insertAdjacentHTML("beforebegin", this.responseText);
+    function insert(response, isinfinite){
+        if (response.status == 200 && response.readyState == 4){
+            var loader_container = document.querySelector(".loader-container");
+            if (!isinfinite){
+                var nxtpage_container = document.querySelector(".nxtpage-container");
+                nxtpage_container.insertAdjacentHTML("beforebegin", response.responseText);
+                nxtpage_container.classList.remove("hidden");
             }
-            catch(er){
-                console.log("error "+er);
-                blog_content.insertAdjacentHTML("beforeend", this.responseText);
+            else{
+                loader_container.insertAdjacentHTML("beforebegin", response.responseText);
             }
-            console.log(this.responseText);
+            loader_container.classList.add("hidden");
         }
     }
-    req.addEventListener("readystatechange", insert);
+    if(!isinfinite)
+        document.querySelector(".nxtpage-container").classList.add("hidden");
+    document.querySelector(".loader-container").classList.remove("hidden");
+    req.addEventListener("readystatechange", function(){insert(this, isinfinite)});
     req.open("GET", url, true);
     req.send();
 }
