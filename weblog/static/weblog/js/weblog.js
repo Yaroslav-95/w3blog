@@ -20,8 +20,8 @@ function floatSidebar(){
         document.querySelector(".breadcrumb").offsetHeight;
     if((document.body.scrollTop > offset || document.documentElement.scrollTop > offset)){
         sidebar.classList.add("float");
-        sidebar.style.left = blog_content.offsetLeft + blog_content.offsetWidth + "px";
         sidebar_filler.classList.remove("hidden");
+        sidebar.style.left = blog_content.offsetLeft + blog_content.offsetWidth + "px";
     }
     else{
         sidebar.classList.remove("float");
