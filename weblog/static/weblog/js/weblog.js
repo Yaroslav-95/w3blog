@@ -12,6 +12,23 @@ function toggleNode(caller){
     target.classList.toggle('show');
 }
 
+function floatSidebar(){
+    var sidebar = document.querySelector(".weblog-sidebar.floating-sidebar");
+    var sidebar_filler = document.querySelector(".sidebar-filler");
+    var blog_content = document.querySelector(".blog-content");
+    var offset = document.querySelector("nav").offsetHeight +
+        document.querySelector(".breadcrumb").offsetHeight;
+    if((document.body.scrollTop > offset || document.documentElement.scrollTop > offset)){
+        sidebar.classList.add("float");
+        sidebar.style.left = blog_content.offsetLeft + blog_content.offsetWidth + "px";
+        sidebar_filler.classList.remove("hidden");
+    }
+    else{
+        sidebar.classList.remove("float");
+        sidebar_filler.classList.add("hidden");
+    }
+}
+
 function loadBlogPosts(url, page = 2, isinfinite = false){
     var req = new XMLHttpRequest();
     function insert(response, isinfinite){

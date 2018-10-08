@@ -92,7 +92,7 @@ hr{
 .navbar-brand, .navbar-brand:visited{
     font-family: Georgia, serif;
     color: #dedede;
-    font-size: 1.5em;
+    font-size: 2em;
 }
 
 .weblog-categories,
@@ -249,6 +249,16 @@ hr{
 .weblog-sidebar{
     padding: 1em 2em;
     padding-bottom: 3em;
+}
+
+.weblog-sidebar.floating-sidebar{
+    position: static;
+    height: min-content;
+}
+
+.weblog-sidebar.floating-sidebar.float{
+    position: fixed;
+    top: 0;
 }
 
 .post-author{

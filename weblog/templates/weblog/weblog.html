@@ -21,7 +21,10 @@
         {% endblock %}
     </div>
     {% if show_sidebar %}
-    <div class="weblog-sidebar">
+    {% if floating_sidebar %}
+    <div class="sidebar-filler hidden"></div>
+    {% endif %}
+    <div class="weblog-sidebar{% if floating_sidebar %} floating-sidebar{% endif %}">
         {% if show_categories %}
         {% if category %}
         {% if category == 'misc' %}
@@ -39,4 +42,15 @@
     </div>
     {% endif %}
 </div>
+{% if floating_sidebar %}
+    <script>
+        window.addEventListener("load", function(){
+            var sb_width = document.querySelector(".weblog-sidebar.floating-sidebar").offsetWidth;
+            var sidebar_filler = document.querySelector(".sidebar-filler");
+            sidebar_filler.style.width = sb_width+"px";
+            sidebar_filler.style.height = "10px";
+            window.addEventListener("scroll", floatSidebar);
+        });
+    </script>
+{% endif %}
 {% endblock %}

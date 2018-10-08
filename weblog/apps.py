@@ -14,6 +14,7 @@ SETTINGS = {
     'posts_per_page': 10,
     'dynamic_load': False,
     'infinite_load': False,
+    'floating_sidebar': False,
     'enable_rss': True,
 }
 
