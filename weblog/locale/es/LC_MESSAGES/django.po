@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-17 23:47+0300\n"
+"POT-Creation-Date: 2018-10-08 06:22+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,30 +18,30 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: feeds.py:25 templates/weblog/index.html:6 templatetags/weblog_extras.py:43
-#: views.py:94 views.py:181
+#: feeds.py:27 templates/weblog/index.html:6 templatetags/weblog_extras.py:43
+#: views.py:100 views.py:201
 msgctxt "Posts without category"
 msgid "Uncategorized"
 msgstr "Sin categoría"
 
-#: feeds.py:31
+#: feeds.py:33
 #, fuzzy, python-format
 #| msgctxt "Posts in category"
 #| msgid "Posts in %(category_name)s"
 msgid "%(blog_title)s's %(category_name)s RSS feed"
 msgstr "RSS de %(category_name)s en %(blog_title)s"
 
-#: feeds.py:32
+#: feeds.py:34
 #, python-format
 msgid "%(blog_title)s RSS feed"
 msgstr "RSS de %(blog_title)s"
 
-#: feeds.py:41
+#: feeds.py:43
 #, python-format
 msgid "Latest %(category_name)s blog posts on %(blog_title)s"
 msgstr "Las entradas más nueva de %(category_name)s en %(blog_title)s"
 
-#: feeds.py:42
+#: feeds.py:44
 #, python-format
 msgid "Latest blog posts on %(blog_title)s"
 msgstr "Las entradas más nueva en %(blog_title)s"
@@ -158,7 +158,7 @@ msgctxt "Noun"
 msgid "Comments"
 msgstr "Comentarios"
 
-#: templates/weblog/index.html:11 templates/weblog/index.html:28
+#: templates/weblog/index.html:11 templates/weblog/index.html:31
 msgctxt "Home page"
 msgid "Home"
 msgstr "Página principal"
@@ -186,48 +186,60 @@ msgctxt "Posts from archive (year/month,year)"
 msgid "Posts from %(year)s"
 msgstr "Entradas del %(year)s"
 
-#: templates/weblog/index.html:34
+#: templates/weblog/index.html:38
 msgid "Important post"
 msgstr "Importante"
 
-#: templates/weblog/index.html:36 templates/weblog/index.html:51
-#: templates/weblog/post.html:7
+#: templates/weblog/index.html:40 templates/weblog/index.html:55
+#: templates/weblog/nxtpage.html:5 templates/weblog/post.html:7
 #, python-format
-msgid "Published on %(publish_date)s"
-msgstr "Publicado el %(publish_date)s"
+msgid "Published on <span class=\"post-publish-date\">%(publish_date)s</span>"
+msgstr ""
 
-#: templates/weblog/index.html:36 templates/weblog/index.html:51
-#: templates/weblog/post.html:7
+#: templates/weblog/index.html:40 templates/weblog/index.html:55
+#: templates/weblog/nxtpage.html:5 templates/weblog/post.html:7
 #, python-format
 msgctxt "Written by (Author)"
-msgid ", by %(author)s"
-msgstr ", por %(author)s"
+msgid ", by <span class=\"post-author\">%(author)s</span>"
+msgstr ""
 
-#: templates/weblog/index.html:42 templates/weblog/index.html:57
+#: templates/weblog/index.html:46 templates/weblog/index.html:61
+#: templates/weblog/nxtpage.html:11
 msgid "Read more..."
 msgstr "Leer más..."
 
-#: templates/weblog/index.html:64
+#: templates/weblog/index.html:69
+#, fuzzy
+#| msgid "Read more..."
+msgctxt "Load more pages"
+msgid "Load more..."
+msgstr "Mostrar más..."
+
+#: templates/weblog/index.html:74
+msgid "Loading..."
+msgstr "Cargando..."
+
+#: templates/weblog/index.html:80
 msgctxt "Page"
 msgid "First"
 msgstr "Primera"
 
-#: templates/weblog/index.html:65
+#: templates/weblog/index.html:81
 msgctxt "Page"
 msgid "Previous"
 msgstr "Anterior"
 
-#: templates/weblog/index.html:93
+#: templates/weblog/index.html:109
 msgctxt "Page"
 msgid "Next"
 msgstr "Siguiente"
 
-#: templates/weblog/index.html:94
+#: templates/weblog/index.html:110
 msgctxt "Page"
 msgid "Last"
 msgstr "Última"
 
-#: templates/weblog/index.html:100
+#: templates/weblog/index.html:117
 msgid "Nothing has been posted yet."
 msgstr "No hay ninguna publicación."
 
@@ -313,13 +325,20 @@ msgstr ""
 msgid "December"
 msgstr ""
 
-#: views.py:202
+#: views.py:232
 msgid "You need to sign in to submit a comment"
 msgstr "Para poder comentar necesita iniciar sesión"
 
-#: views.py:204
+#: views.py:234
 msgid "Error submitting comment: Invalid data"
 msgstr "Error al intentar enviar el comentario: Información invalida"
+
+#~ msgid "Published on %(publish_date)s"
+#~ msgstr "Publicado el %(publish_date)s"
+
+#~ msgctxt "Written by (Author)"
+#~ msgid ", by %(author)s"
+#~ msgstr ", por %(author)s"
 
 #~ msgid "English"
 #~ msgstr "Inglés"

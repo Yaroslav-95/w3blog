@@ -108,17 +108,19 @@ hr{
 .weblog-categories li a{
     display: block;
     padding: 0.5em 1em;
-    color: #3e3e3e;
+    /*color: #3e3e3e;*/
 }
 
 .weblog-categories li a:hover{
-    background-color: #0080a0;
-    color: #dedede;
+    /*background-color: #0080a0;
+    color: #dedede;*/
 }
 
 .weblog-categories li a.active{
-    background-color: #0055a0;
-    color: #dedede;
+    color: #3e3e3e;
+    font-weight: 600;
+    /*background-color: #0055a0;
+    color: #dedede;*/
 }
 
 .breadcrumb{
@@ -234,27 +236,21 @@ hr{
 .blog-wrapper{
     display: flex;
     flex-wrap: wrap;
+    max-width: 45em;
     justify-content: center;
-    padding-bottom: 2em;
 }
 
 .blog-content{
     flex: 3;
     padding: 1em;
+    padding-bottom: 3em;
 }
 
 .weblog-sidebar{
     padding: 1em 2em;
+    padding-bottom: 3em;
 }
 
-.blog-content{
-    max-width: 45em;
-}
-
-.blogpost{
-}
-
-.post-publish-date,
 .post-author{
     font-style: italic;
 }
