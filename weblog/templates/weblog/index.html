@@ -161,7 +161,7 @@
         {% if infinite_load %}
         window.addEventListener("scroll", function(){
             if (current_page != last_page){
-                if(document.documentElement.scrollHeight - document.documentElement.scrollTop === document.documentElement.clientHeight)
+                if(document.documentElement.scrollHeight - document.documentElement.scrollTop - 10 <= document.documentElement.clientHeight)
                     loadNextPage();
             }
         });
