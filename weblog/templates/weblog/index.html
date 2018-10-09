@@ -132,7 +132,11 @@
             if (current_page != last_page){
                 current_page++;
                 {% if category %}
+                {% if category == 'misc' %}
+                var url = "{% url 'weblog:GetCategoryPosts' category_slug=category nxtpage=current_page %}";
+                {% else %}
                 var url = "{% url 'weblog:GetCategoryPosts' category_slug=category.slug nxtpage=current_page %}";
+                {% endif %}
                 {% elif year %}
                 {% if month_num %}
                 var url = "{% url 'weblog:GetArchivePosts' year=year month=month_num nxtpage=current_page %}";
