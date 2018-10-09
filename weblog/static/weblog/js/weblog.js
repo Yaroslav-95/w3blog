@@ -13,19 +13,21 @@ function toggleNode(caller){
 }
 
 function floatSidebar(){
-    var sidebar = document.querySelector(".weblog-sidebar.floating-sidebar");
-    var sidebar_filler = document.querySelector(".sidebar-filler");
-    var blog_content = document.querySelector(".blog-content");
-    var offset = document.querySelector("nav").offsetHeight +
-        document.querySelector(".breadcrumb").offsetHeight;
-    if((document.body.scrollTop > offset || document.documentElement.scrollTop > offset)){
-        sidebar.classList.add("float");
-        sidebar_filler.classList.remove("hidden");
-        sidebar.style.left = blog_content.offsetLeft + blog_content.offsetWidth + "px";
-    }
-    else{
-        sidebar.classList.remove("float");
-        sidebar_filler.classList.add("hidden");
+    if (screen.width > 760){
+        var sidebar = document.querySelector(".weblog-sidebar.floating-sidebar");
+        var sidebar_filler = document.querySelector(".sidebar-filler");
+        var blog_content = document.querySelector(".blog-content");
+        var offset = document.querySelector("nav").offsetHeight +
+            document.querySelector(".breadcrumb").offsetHeight;
+        if((document.body.scrollTop > offset || document.documentElement.scrollTop > offset)){
+            sidebar.classList.add("float");
+            sidebar_filler.classList.remove("hidden");
+            sidebar.style.left = blog_content.offsetLeft + blog_content.offsetWidth + "px";
+        }
+        else{
+            sidebar.classList.remove("float");
+            sidebar_filler.classList.add("hidden");
+        }
     }
 }
 

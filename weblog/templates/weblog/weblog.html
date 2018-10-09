@@ -51,6 +51,18 @@
             sidebar_filler.style.height = "10px";
             window.addEventListener("scroll", floatSidebar);
         });
+        window.addEventListener("resize", function(){
+            if (screen.width > 760){
+                var sb_width = document.querySelector(".weblog-sidebar.floating-sidebar").offsetWidth;
+                var sidebar_filler = document.querySelector(".sidebar-filler");
+                sidebar_filler.style.width = sb_width+"px";
+                sidebar_filler.style.height = "10px";
+            }
+            else{
+                var sidebar_filler = document.querySelector(".sidebar-filler");
+                sidebar_filler.style.width = 0;
+            }
+        });
     </script>
 {% endif %}
 {% endblock %}

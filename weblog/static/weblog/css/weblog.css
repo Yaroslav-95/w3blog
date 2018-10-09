@@ -366,4 +366,13 @@ hr{
         border: 0;
         content: " ";
     }
+
+    .weblog-sidebar.floating-sidebar.float{
+        position: fixed;
+        top: 0;
+    }
+    .sidebar-filler{
+        width: 0;
+        display: none;
+    }
 }
