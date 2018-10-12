@@ -46,7 +46,7 @@ def get_sidebar_categories(selected_cat_slug=None):
 
 @register.inclusion_tag('weblog/sidebar_archive.html')
 def get_sidebar_archive():
-    if BlogPost.objects.all().count() < 1:
+    if BlogPost.objects.filter(published=True).count() < 1:
         return {}
     now = datetime.datetime.now()
     oldest_post = BlogPost.objects.filter(published=True).reverse()[0]

@@ -78,7 +78,7 @@ def Index(request, **kwargs):
     # and get the pinned and necessary posts depending on the page
     posts_raw = list(all_pages[slice_start:slice_end])
     if len(kwargs) < 1:
-        for pinned_post in BlogPost.objects.filter(pinned=True).order_by('-pin_priority'):
+        for pinned_post in BlogPost.objects.filter(published=True, pinned=True).order_by('-pin_priority'):
             if pinned_post in posts_raw:
                 posts_raw.remove(pinned_post)
             posts_raw.append(pinned_post)
@@ -155,6 +155,7 @@ def Index(request, **kwargs):
         else:
             posts.append(post)
 
+    print('rendering template')
     # If ajax is asking for the next page through the kwargs,
     # just send the posts for the requested page without the other page elements
     if 'nxtpage' in kwargs:
