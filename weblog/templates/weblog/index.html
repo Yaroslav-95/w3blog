@@ -116,6 +116,7 @@
         {% else %}
         <div class="text-center"><h3>{% trans 'Nothing has been posted yet.' %}</h3></div>
         {% endif %}
+    {% if last_page > 1 %}
     {% if dynamic_load %}
     <script>
         var current_page = {{ current_page }};
@@ -171,5 +172,6 @@
         });
         {% endif %}
     </script>
+    {% endif %}
     {% endif %}
 {% endblock %}
