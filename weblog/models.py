@@ -1,8 +1,10 @@
-from django.db import models
-from django.shortcuts import reverse
+from django.conf import settings
 from django.contrib.auth.models import User
+from django.db import models
 from django.forms import ModelForm, Textarea
-from django.utils.translation import ugettext_lazy as _, pgettext_lazy
+from django.shortcuts import reverse
+from django.utils.translation import pgettext_lazy, ugettext_lazy as _
+
 
 class Category(models.Model):
     name = models.CharField(max_length=250, verbose_name=pgettext_lazy('Noun, not personal name', 'Name'), blank=False, unique=True)
@@ -36,7 +38,7 @@ class CategoryTranslation(models.Model):
 
 
 class BlogPost(models.Model):
-    author = models.ForeignKey(User, verbose_name=_('Author'), on_delete=models.PROTECT)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_('Author'), on_delete=models.PROTECT)
     title = models.CharField(max_length=100, verbose_name=pgettext_lazy('As in name', 'Title'), blank=False)
     content = models.TextField(verbose_name=pgettext_lazy('Of post, comment, article, etc.', 'Content'), blank=False)
     preview_image = models.ImageField(upload_to='weblog/preview_images/%Y/%m/%d/', blank=True, verbose_name=_('Preview image'))
@@ -52,6 +54,7 @@ class BlogPost(models.Model):
     def get_absolute_url(self):
         if self.categories.all().count() > 0:
             category = self.categories.all()[0].slug
+
             return reverse('weblog:PostView', kwargs={'category_slug': category, 'post_slug': self.slug})
         else:
             return reverse('weblog:PostView', kwargs={'category_slug': 'misc', 'post_slug': self.slug})
@@ -77,7 +80,7 @@ class Translation(models.Model):
         verbose_name_plural = _('Translations')
 
 class PostComment(models.Model):
-    author = models.ForeignKey(User, verbose_name=_('Author'), null=True, blank=True, on_delete=models.PROTECT)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_('Author'), null=True, blank=True, on_delete=models.PROTECT)
     post = models.ForeignKey(BlogPost, verbose_name=pgettext_lazy('Noun, as in blog post', 'Post'), on_delete=models.CASCADE)
     content = models.TextField(verbose_name=pgettext_lazy('Of post, comment, article, etc.', 'Content'), blank=False)
     publish_date = models.DateTimeField(verbose_name=_('Publish date'))
