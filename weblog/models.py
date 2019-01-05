@@ -119,7 +119,7 @@ class PostComment(models.Model):
         'Noun, as in blog post', 'Post'), on_delete=models.CASCADE)
     content = models.TextField(verbose_name=pgettext_lazy(
         'Of post, comment, article, etc.', 'Content'), blank=False)
-    publish_date = models.DateTimeField(verbose_name=_('Publish date'))
+    # publish_date = models.DateTimeField(verbose_name=_('Publish date'))
 
     class Meta:
         verbose_name = pgettext_lazy('Noun', 'Comment')
