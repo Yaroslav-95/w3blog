@@ -29,7 +29,7 @@ url(r'^blog/', include('weblog.urls')),
 url(r'^summernote/', include('django_summernote.urls')),
 ```
 
-3. Migrate the models to the database by running "python manage.py makemigrations" and then "python manage.py migrate"
+3. Migrate the models to the database by running "python manage.py migrate".
 
 4. You can configure and customize the blog by adding and modifying to your liking/needs the following settings to your settings.py:
 
@@ -65,3 +65,5 @@ This project was previously named django-weblog, however, I had to renamed it du
 ### Changelog ###
 
 You can view a short summary of changes for each release in the releases section of the project's page on Github.
+
+Note: If you had already made migrations by yourself for this app before version 0.5.2, you might notice that django is telling you that there are new unapplied migrations. Apply them as you usually would, and if a "Programming Error: column "x" exists in..." happens, run "python manage.py migrate --fake weblog".

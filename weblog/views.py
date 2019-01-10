@@ -118,10 +118,17 @@ def Index(request, **kwargs):
             post['title'] = post_raw.title
             post['content'] = post_raw.content
             post['preview_image'] = post_raw.preview_image
+            # If the author of the post provided custom preview text use it
             if len(post_raw.preview_text) > 5:
                 post['preview_text'] = post_raw.preview_text
             else:
-                post['preview_text'] = post_raw.content.split('</p>', 1)[0]+'</p>'
+                try:
+                    # Otherwise, find first paragraph and use it as preview text
+                    # If none found, the preview is empty
+                    post['preview_text'] = \
+                        post_raw.content.split('<p>', 2)[1].split('</p>', 1)[0]
+                except IndexError:
+                    post['preview_text'] = ''
         else:
             post_trans = None
             orig_lang = post_raw.original_language
@@ -192,16 +199,23 @@ def PostView(request, category_slug, post_slug, language=None):
             context_dict['category'] = category
             # If we have the multilingual setting on, get the translation for the category
             if IS_MULTILINGUAL:
-                category_translations = CategoryTranslation.objects.filter(category=category)
+                category_translations =\
+                    CategoryTranslation.objects.filter(category=category)
                 if category_translations.count() > 0:
                     for cat_trans in category_translations:
                         if current_language[0:2] == cat_trans.language[0:2]:
                             context_dict['category'] = cat_trans
         # Put the necessary data about the category for the breadcrumbs
         if category_slug == 'misc':
-            context_dict['breadcrumbs'] = [{'url': reverse('weblog:CategoryIndex', kwargs={'category_slug': category_slug}), 'name': pgettext_lazy('Posts without category', 'Uncategorized')},]
+            context_dict['breadcrumbs'] = [{
+                'url': reverse('weblog:CategoryIndex', kwargs={
+                    'category_slug': category_slug}),
+                'name': pgettext_lazy('Posts without category', 'Uncategorized')},]
         else:
-            context_dict['breadcrumbs'] = [{'url': reverse('weblog:CategoryIndex', kwargs={'category_slug': category_slug}), 'name': context_dict['category']},]
+            context_dict['breadcrumbs'] = [{
+                'url': reverse('weblog:CategoryIndex', kwargs={
+                    'category_slug': category_slug}),
+                'name': context_dict['category']},]
 
     # Put the necessary information about the author, based on the
     # current project's settings
@@ -214,7 +228,8 @@ def PostView(request, category_slug, post_slug, language=None):
     if ENABLE_COMMENTS:
         context_dict['comments'] = PostComment.objects.filter(post=post)
 
-    # If this is a POST request, it (probably) means that the user is attempting to post a comment
+    # If this is a POST request, it (probably) means that the user
+    # is attempting to post a comment
     if request.method == 'POST':
         form = PostCommentForm(request.POST)
         context_dict['comment_submission'] = True
@@ -224,10 +239,16 @@ def PostView(request, category_slug, post_slug, language=None):
             # Make sure that either anonymous comments are allowed or
             # that the user is authenticated
             if request.user.is_authenticated:
-                new_comment = PostComment(author=request.user, post=post, content=comment_content, publish_date=datetime.datetime.now())
+                new_comment = PostComment(
+                        author=request.user,
+                        post=post,
+                        content=comment_content,
+                        publish_date=datetime.datetime.now())
                 new_comment.save()
             elif ALLOW_ANON_COMMENTS:
-                new_comment = PostComment(post=post, content=comment_content, publish_date=datetime.datetime.now())
+                new_comment = PostComment(post=post,
+                        content=comment_content,
+                        publish_date=datetime.datetime.now())
                 new_comment.save()
             else:
                 context_dict['comment_submission_error'] = _('You need to sign in to submit a comment')
@@ -278,9 +299,13 @@ def PostView(request, category_slug, post_slug, language=None):
     # If we are reading a translation, and not the original text,
     # use those translations for the breadcrumbs, otherwise, use the original title
     if 'post_translation' in context_dict:
-        context_dict['breadcrumbs'].append({'url': post.get_absolute_url(), 'name': post_translation.title})
+        context_dict['breadcrumbs'].append({
+            'url': post.get_absolute_url(),
+            'name': context_dict['post_translation'].title})
     else:
-        context_dict['breadcrumbs'].append({'url': post.get_absolute_url(), 'name': post.title})
+        context_dict['breadcrumbs'].append({
+            'url': post.get_absolute_url(),
+            'name': post.title})
     return render(request, 'weblog/post.html', context_dict)
 
 # A dirty hack to change the language on the fly.
