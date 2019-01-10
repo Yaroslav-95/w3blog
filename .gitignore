@@ -12,3 +12,4 @@ build/
 *.tex
 *.tar
 *.gz
+*.swp
