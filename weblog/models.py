@@ -3,6 +3,7 @@ from django.db import models
 from django.forms import ModelForm, Textarea
 from django.shortcuts import reverse
 from django.utils.translation import pgettext_lazy, ugettext_lazy as _
+from django.utils import timezone
 
 
 class Category(models.Model):
@@ -119,7 +120,7 @@ class PostComment(models.Model):
         'Noun, as in blog post', 'Post'), on_delete=models.CASCADE)
     content = models.TextField(verbose_name=pgettext_lazy(
         'Of post, comment, article, etc.', 'Content'), blank=False)
-    # publish_date = models.DateTimeField(verbose_name=_('Publish date'))
+    publish_date = models.DateTimeField(verbose_name=_('Publish date'), default=timezone.now())
 
     class Meta:
         verbose_name = pgettext_lazy('Noun', 'Comment')
