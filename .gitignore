@@ -5,7 +5,7 @@ sdist/
 __pycache__/
 *.egg-info
 build/
-*.py
+*.pyc
 
 ### Other ###
 *.log

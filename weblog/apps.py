@@ -18,5 +18,6 @@ SETTINGS = {
     'enable_rss': True,
 }
 
+
 class WeblogConfig(AppConfig):
     name = 'weblog'
